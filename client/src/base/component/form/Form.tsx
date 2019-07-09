@@ -1,5 +1,8 @@
 import * as React from "react";
-
+import {FormState} from "./FormState";
+import {FormProps} from "./FormProps";
+import {Errors} from "./Errors";
+import {Values} from "./Values";
 
 export interface FormContext extends FormState {
     /* Function that allows values in the values state to be set */
@@ -14,35 +17,6 @@ export const FormContext = React.createContext<FormContext | undefined>(
     undefined
 );
 
-
-interface FormProps {
-    /* The http path that the form will be posted to */
-    action: string;
-
-    /* A prop which allows content to be injected */
-    render: () => React.ReactNode
-}
-
-export interface Values {
-    /* Key value pairs for all the field values with key being the field name */
-    [key: string]: any;
-}
-
-export interface Errors {
-    /* The validation error messages for each field (key is the field name */
-    [key: string]: string;
-}
-
-export interface FormState {
-    /* The field values */
-    values: Values;
-
-    /* The field validation error messages */
-    errors: Errors;
-
-    /* Whether the form has been successfully submitted */
-    submitSuccess?: boolean;
-}
 
 export class Form extends React.Component<FormProps, FormState> {
     constructor(props: FormProps) {
