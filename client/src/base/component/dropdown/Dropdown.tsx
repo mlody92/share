@@ -1,6 +1,7 @@
 import * as React from "react";
 import {DropdownProps} from "./DropdownProps";
-import {FormContext} from "../form/Form";
+import {FormCtx} from "../form/Form";
+import {FormContext} from "../form/FormContext";
 
 export const Dropdown = ({id, options, value}: DropdownProps) => {
 
@@ -13,7 +14,7 @@ export const Dropdown = ({id, options, value}: DropdownProps) => {
     };
 
     return (
-        <FormContext.Consumer>
+        <FormCtx.Consumer>
             {(context: FormContext) => (
                 <select
                     id={id}
@@ -31,7 +32,7 @@ export const Dropdown = ({id, options, value}: DropdownProps) => {
                     ))}
                 </select>
             )}
-        </FormContext.Consumer>
+        </FormCtx.Consumer>
     );
 
 

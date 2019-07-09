@@ -1,6 +1,7 @@
 import * as React from "react";
 import {MultiTextboxProps} from "./MultiTextboxProps";
-import {FormContext} from "../form/Form";
+import {FormCtx} from "../form/Form";
+import {FormContext} from "../form/FormContext";
 
 export const MultiTextbox = ({id, value}: MultiTextboxProps) => {
 
@@ -13,7 +14,7 @@ export const MultiTextbox = ({id, value}: MultiTextboxProps) => {
     };
 
     return (
-        <FormContext.Consumer>
+        <FormCtx.Consumer>
             {(context: FormContext) => (
                 <textarea
                     id={id}
@@ -23,7 +24,7 @@ export const MultiTextbox = ({id, value}: MultiTextboxProps) => {
                     className="form-control"
                 />
             )}
-        </FormContext.Consumer>
+        </FormCtx.Consumer>
     );
 };
 

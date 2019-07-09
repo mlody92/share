@@ -3,17 +3,13 @@ import {FormState} from "./FormState";
 import {FormProps} from "./FormProps";
 import {Errors} from "./Errors";
 import {Values} from "./Values";
-
-export interface FormContext extends FormState {
-    /* Function that allows values in the values state to be set */
-    setValues: (values: Values) => void;
-}
+import {FormContext} from "./FormContext";
 
 /*
  * The context which allows state and functions to be shared with Field.
  * Note that we need to pass createContext a default value which is why undefined is unioned in the type
  */
-export const FormContext = React.createContext<FormContext | undefined>(
+export const FormCtx = React.createContext<FormContext | undefined>(
     undefined
 );
 
@@ -94,7 +90,7 @@ export class Form extends React.Component<FormProps, FormState> {
             setValues: this.setValues
         };
         return (
-            <FormContext.Provider value={context}>
+            <FormCtx.Provider value={context}>
                 <form onSubmit={this.handleSubmit} noValidate={true}>
                     <div className="container">
 
@@ -128,7 +124,7 @@ export class Form extends React.Component<FormProps, FormState> {
                         )}
                     </div>
                 </form>
-            </FormContext.Provider>
+            </FormCtx.Provider>
         );
     }
 }

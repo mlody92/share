@@ -1,6 +1,7 @@
 import * as React from "react";
 import {TextboxProps} from "./TextboxProps";
-import {FormContext} from "../form/Form";
+import {FormCtx} from "../form/Form";
+import {FormContext} from "../form/FormContext";
 
 export const Textbox = ({id, value}: TextboxProps) => {
     const onChange = (context: FormContext) => (e: React.FormEvent<HTMLInputElement>) => {
@@ -12,7 +13,7 @@ export const Textbox = ({id, value}: TextboxProps) => {
     };
 
     return (
-        <FormContext.Consumer>
+        <FormCtx.Consumer>
             {(context: FormContext) => (
                 <input
                     id={id}
@@ -23,7 +24,7 @@ export const Textbox = ({id, value}: TextboxProps) => {
                     className="form-control"
                 />
             )}
-        </FormContext.Consumer>
+        </FormCtx.Consumer>
     );
 };
 
