@@ -1,148 +1,28 @@
-import * as React from 'react';
-import {
-    HelpBlock,
-    FormGroup,
-    FormControl,
-    ControlLabel
-} from "react-bootstrap";
+import * as React from "react";
+import {Form} from "../base/component/form/Form";
+import {Field} from "../base/component/field/Field";
 
-interface SignUpProps {
-}
-
-interface SignUpState {
-    isLoading: boolean;
-    email : string;
-    password : string;
-    confirmPassword : string;
-    confirmationCode : string;
-    newUser : string;
-}
-
-class SignUp extends React.Component<SignUpProps, SignUpState> {
-
-    constructor(props:SignUpProps) {
-        super(props);
-
-        this.state = {
-            isLoading: false,
-            email: "",
-            password: "",
-            confirmPassword: "",
-            confirmationCode: "",
-            newUser: null
-        };
-    }
-
-    validateForm() {
-        return (
-            this.state.email.length > 0 &&
-            this.state.password.length > 0 &&
-            this.state.password === this.state.confirmPassword
-        );
-    }
-
-    validateConfirmationForm() {
-        return this.state.confirmationCode.length > 0;
-    }
-
-    handleChange = event => {
-        this.setState({
-            [event.target.id]: event.target.value
-        });
-    };
-
-    handleSubmit = async event => {
-        event.preventDefault();
-
-        this.setState({ isLoading: true });
-
-        this.setState({ newUser: "test" });
-
-        this.setState({ isLoading: false });
-    }
-
-    handleConfirmationSubmit = async event => {
-        event.preventDefault();
-
-        this.setState({ isLoading: true });
-    }
-
-    renderConfirmationForm() {
-        return (
-            <form onSubmit={this.handleConfirmationSubmit}>
-                <FormGroup controlId="confirmationCode" bsSize="large">
-                    <ControlLabel>Confirmation Code</ControlLabel>
-                    <FormControl
-                        autoFocus
-                        type="tel"
-                        value={this.state.confirmationCode}
-                        onChange={this.handleChange}
+export const SignIn: React.SFC = () => {
+    return (
+        <Form
+            action="http://localhost:4351/api/contactus"
+            render={() => (
+                <React.Fragment>
+                    <div className="alert alert-info" role="alert">
+                        Enter the information below and we'll get back to you as soon as we
+                        can.
+                    </div>
+                    <Field id="name" label="Name"/>
+                    <Field id="email" label="Email"/>
+                    <Field
+                        id="reason"
+                        label="Reason"
+                        editor="dropdown"
+                        options={["", "Marketing", "Support", "Feedback", "Jobs"]}
                     />
-                    <HelpBlock>Please check your email for the code.</HelpBlock>
-                </FormGroup>
-                <LoaderButton
-                    block
-                    bsSize="large"
-                    disabled={!this.validateConfirmationForm()}
-                    type="submit"
-                    isLoading={this.state.isLoading}
-                    text="Verify"
-                    loadingText="Verifying…"
-                />
-            </form>
-        );
-    }
-
-    renderForm() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <FormGroup controlId="email" bsSize="large">
-                    <ControlLabel>Email</ControlLabel>
-                    <FormControl
-                        autoFocus
-                        type="email"
-                        value={this.state.email}
-                        onChange={this.handleChange}
-                    />
-                </FormGroup>
-                <FormGroup controlId="password" bsSize="large">
-                    <ControlLabel>Password</ControlLabel>
-                    <FormControl
-                        value={this.state.password}
-                        onChange={this.handleChange}
-                        type="password"
-                    />
-                </FormGroup>
-                <FormGroup controlId="confirmPassword" bsSize="large">
-                    <ControlLabel>Confirm Password</ControlLabel>
-                    <FormControl
-                        value={this.state.confirmPassword}
-                        onChange={this.handleChange}
-                        type="password"
-                    />
-                </FormGroup>
-                <LoaderButton
-                    block
-                    bsSize="large"
-                    disabled={!this.validateForm()}
-                    type="submit"
-                    isLoading={this.state.isLoading}
-                    text="Signup"
-                    loadingText="Signing up…"
-                />
-            </form>
-        );
-    }
-
-    render() {
-        return (
-            <div className="Signup">
-                {this.state.newUser === null
-                    ? this.renderForm()
-                    : this.renderConfirmationForm()}
-            </div>
-        );
-    }
-}
-
-export default SignUp;
+                    <Field id="notes" label="Notes" editor="multilinetextbox"/>
+                </React.Fragment>
+            )}
+        />
+    );
+};

@@ -2,7 +2,8 @@ import * as React from 'react';
 import './App.css';
 
 import logo from './logo.svg';
-import UserList from "./user/UserList";
+// import UserList from "./user/UserList";
+import {SignIn} from "./app/SignIn";
 
 interface User {
     id: number;
@@ -57,7 +58,8 @@ class App extends React.Component<AppProps, AppState> {
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Welcome to React</h1>
                 </header>
-                <UserList/>
+                {/*<UserList/>*/}
+                <SignIn/>
             </div>
         );
   }
