@@ -1,5 +1,20 @@
 import * as React from "react";
 
+
+export interface FormContext extends FormState {
+    /* Function that allows values in the values state to be set */
+    setValues: (values: Values) => void;
+}
+
+/*
+ * The context which allows state and functions to be shared with Field.
+ * Note that we need to pass createContext a default value which is why undefined is unioned in the type
+ */
+export const FormContext = React.createContext<FormContext | undefined>(
+    undefined
+);
+
+
 interface FormProps {
     /* The http path that the form will be posted to */
     action: string;
@@ -64,9 +79,11 @@ export class Form extends React.Component<FormProps, FormState> {
     ): Promise<void> => {
         e.preventDefault();
 
+        console.log(this.state.values);
+
         if (this.validateForm()) {
             const submitSuccess: boolean = await this.submitForm();
-            this.setState({ submitSuccess });
+            this.setState({submitSuccess});
         }
     };
 
@@ -88,42 +105,56 @@ export class Form extends React.Component<FormProps, FormState> {
         return true;
     }
 
+    /**
+     * Stores new field values in state
+     * @param {IValues} values - The new field values
+     */
+    private setValues = (values: Values) => {
+        this.setState({values: {...this.state.values, ...values}});
+    };
+
     render() {
-        const { submitSuccess, errors } = this.state;
+        const {submitSuccess, errors} = this.state;
+        const context: FormContext = {
+            ...this.state,
+            setValues: this.setValues
+        };
         return (
-            <form onSubmit={this.handleSubmit} noValidate={true}>
-                <div className="container">
+            <FormContext.Provider value={context}>
+                <form onSubmit={this.handleSubmit} noValidate={true}>
+                    <div className="container">
 
-                    {this.props.render()}
+                        {this.props.render()}
 
-                    <div className="form-group">
-                        <button
-                            type="submit"
-                            className="btn btn-primary"
-                            disabled={this.haveErrors(errors)}
-                        >
-                            Submit
-                        </button>
+                        <div className="form-group">
+                            <button
+                                type="submit"
+                                className="btn btn-primary"
+                                disabled={this.haveErrors(errors)}
+                            >
+                                Submit
+                            </button>
+                        </div>
+                        {submitSuccess && (
+                            <div className="alert alert-info" role="alert">
+                                The form was successfully submitted!
+                            </div>
+                        )}
+                        {submitSuccess === false &&
+                        !this.haveErrors(errors) && (
+                            <div className="alert alert-danger" role="alert">
+                                Sorry, an unexpected error has occurred
+                            </div>
+                        )}
+                        {submitSuccess === false &&
+                        this.haveErrors(errors) && (
+                            <div className="alert alert-danger" role="alert">
+                                Sorry, the form is invalid. Please review, adjust and try again
+                            </div>
+                        )}
                     </div>
-                    {submitSuccess && (
-                        <div className="alert alert-info" role="alert">
-                            The form was successfully submitted!
-                        </div>
-                    )}
-                    {submitSuccess === false &&
-                    !this.haveErrors(errors) && (
-                        <div className="alert alert-danger" role="alert">
-                            Sorry, an unexpected error has occurred
-                        </div>
-                    )}
-                    {submitSuccess === false &&
-                    this.haveErrors(errors) && (
-                        <div className="alert alert-danger" role="alert">
-                            Sorry, the form is invalid. Please review, adjust and try again
-                        </div>
-                    )}
-                </div>
-            </form>
+                </form>
+            </FormContext.Provider>
         );
     }
 }

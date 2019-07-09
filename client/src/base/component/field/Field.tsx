@@ -2,34 +2,10 @@ import * as React from "react";
 import {Textbox} from "../textbox/Textbox";
 import MultiTextbox from "../textbox/MultiTextbox";
 import {Dropdown} from "../dropdown/Dropdown";
+import {FieldProps} from "./FieldProps";
 
-/* The available editors for the field */
-type Editor = "textbox" | "multilinetextbox" | "dropdown";
 
-export interface FieldProps {
-    /* The unique field name */
-    id: string;
-
-    /* The label text for the field */
-    label?: string;
-
-    /* The editor for the field */
-    editor?: Editor;
-
-    /* The drop down items for the field */
-    options?: Array<string>;
-
-    /* The field value */
-    value?: any;
-}
-
-export const Field: React.FunctionComponent<FieldProps> = ({
-                                                               id,
-                                                               label,
-                                                               editor,
-                                                               options,
-                                                               value
-                                                           }) => {
+export const Field = ({id, label, editor, options, value}: FieldProps) => {
     return (
         <div className="form-group">
             {label && <label htmlFor={id}>{label}</label>}

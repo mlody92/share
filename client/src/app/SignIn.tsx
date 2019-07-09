@@ -2,7 +2,7 @@ import * as React from "react";
 import {Form} from "../base/component/form/Form";
 import {Field} from "../base/component/field/Field";
 
-export const SignIn: React.SFC = () => {
+export const SignIn: React.FunctionComponent = () => {
     return (
         <Form
             action="http://localhost:4351/api/contactus"

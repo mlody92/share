@@ -1,10 +1,11 @@
 import * as React from "react";
 import {MultiTextboxProps} from "./MultiTextboxProps";
+import {FormContext} from "../form/Form";
 
 export const MultiTextbox = ({id, value}: MultiTextboxProps) => {
 
-    const onChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
-        console.log(e) /* TODO: push change to form values */
+    const onChange = (context: FormContext) => (e: React.FormEvent<HTMLTextAreaElement>) => {
+        context.setValues({[id]: e.currentTarget.value})
     };
 
     const onBlur = (e: React.FormEvent<HTMLTextAreaElement>) => {
@@ -12,13 +13,17 @@ export const MultiTextbox = ({id, value}: MultiTextboxProps) => {
     };
 
     return (
-        <textarea
-            id={id}
-            value={value}
-            onChange={onChange}
-            onBlur={onBlur}
-            className="form-control"
-        />
+        <FormContext.Consumer>
+            {(context: FormContext) => (
+                <textarea
+                    id={id}
+                    value={value}
+                    onChange={onChange(context)}
+                    onBlur={onBlur}
+                    className="form-control"
+                />
+            )}
+        </FormContext.Consumer>
     );
 };
 
