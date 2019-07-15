@@ -8,14 +8,14 @@ import {FormCtx} from "../form/Form";
 import {MultiTextbox} from "../textbox/MultiTextbox";
 
 
-export const Field = ({id, label, editor, options, value}: FieldProps) => {
+export const Field = (props: FieldProps) => {
 
     /**
      * Gets the validation error for the field
      * @param {IErrors} errors - All the errors from the form
      * @returns {string[]} - The validation error
      */
-    const getError = (errors: Errors): string => (errors ? errors[id] : "");
+    const getError = (errors: Errors): string => (errors ? errors[props.id] : "");
 
     /** Gets the inline styles for editor
      * @param {IErrors} errors - All the errors from the form
@@ -28,13 +28,13 @@ export const Field = ({id, label, editor, options, value}: FieldProps) => {
         <FormCtx.Consumer>
             {(context: FormContext) => (
                 <div className="form-group">
-                    {label && <label htmlFor={id}>{label}</label>}
+                    {props.label && <label htmlFor={props.id}>{props.label}</label>}
 
-                    {editor!.toLowerCase() === "textbox" && <Textbox id={id} value={value} style={getEditorStyle(context.errors)} context={context}  />}
+                    {props.editor!.toLowerCase() === "textbox" && <Textbox id={props.id} value={props.value} style={getEditorStyle(context.errors)} context={context}  />}
 
-                    {editor!.toLowerCase() === "multilinetextbox" && <MultiTextbox id={id} value={value} style={getEditorStyle(context.errors)} context={context}/>}
+                    {props.editor!.toLowerCase() === "multilinetextbox" && <MultiTextbox id={props.id} value={props.value} style={getEditorStyle(context.errors)} context={context}/>}
 
-                    {editor!.toLowerCase() === "dropdown" && <Dropdown id={id} value={value} options={options} style={getEditorStyle(context.errors)} context={context}/>}
+                    {props.editor!.toLowerCase() === "dropdown" && <Dropdown id={props.id} value={props.value} options={props.options} style={getEditorStyle(context.errors)} context={context}/>}
 
                     {/* TODO - display validation error */}
                     {getError(context.errors) && (

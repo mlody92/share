@@ -1,16 +1,6 @@
-import * as React from "react";
-import {FormContext} from "../form/FormContext";
+import {ComponentProps} from "../ComponentProps";
 
-export interface DropdownProps {
-    /* The unique field name */
-    id: string;
-
+export interface DropdownProps extends ComponentProps {
     /* The drop down items for the field */
     options?: Array<string>;
-
-    /* The field value */
-    value?: any;
-
-    style?: React.CSSProperties;
-    context: FormContext;
 }

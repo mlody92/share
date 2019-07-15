@@ -1,14 +1,5 @@
-import * as React from "react";
-import {FormContext} from "../form/FormContext";
+import {ComponentProps} from "../ComponentProps";
 
-export interface TextboxProps {
-    /* The unique field name */
-    id: string;
+export interface TextboxProps extends ComponentProps {
 
-    /* The field value */
-    value?: any;
-
-    style?: React.CSSProperties;
-
-    context:FormContext;
 }
