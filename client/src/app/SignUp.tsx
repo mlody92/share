@@ -4,7 +4,7 @@ import {Field} from "../base/component/field/Field";
 import {Fields} from "../base/component/form/Fields";
 import {required, isEmail, maxLength} from "../base/component/form/Validator";
 
-export const SignIn: React.FunctionComponent = () => {
+export const SignUp: React.FunctionComponent = () => {
     const fields: Fields = {
         name: {
             id: "name",

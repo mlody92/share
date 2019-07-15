@@ -44,4 +44,12 @@ public class UserController {
         }
         return "redirect:/users";
     }
+
+
+    @RequestMapping(value = "/api/signup", method = RequestMethod.POST)
+    @CrossOrigin(origins = "http://localhost:3000")
+    public String saveUser2() throws Exception {
+        //todo zwracanie wyjątku
+        throw new Exception("an error");
+    }
 }

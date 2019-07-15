@@ -87,8 +87,12 @@ export class Form extends React.Component<FormProps, FormState> {
      * @returns {boolean} - Whether the form is valid or not
      */
     private validateForm(): boolean {
-        // TODO - validate form
-        return true;
+        const errors: Errors = {};
+        Object.keys(this.props.fields).map((fieldName: string) => {
+            errors[fieldName] = this.validate(fieldName);
+        });
+        this.setState({ errors });
+        return !this.haveErrors(errors);
     }
 
     /**
@@ -96,8 +100,19 @@ export class Form extends React.Component<FormProps, FormState> {
      * @returns {boolean} - Whether the form submission was successful or not
      */
     private async submitForm(): Promise<boolean> {
-        // TODO - submit the form
-        return true;
+        try {
+            const response = await fetch(this.props.action, {
+                method: "post",
+                headers: new Headers({
+                    "Content-Type": "application/json",
+                    Accept: "application/json"
+                }),
+                body: JSON.stringify(this.state.values)
+            });
+            return response.ok;
+        } catch (ex) {
+            return false;
+        }
     }
 
     /**
