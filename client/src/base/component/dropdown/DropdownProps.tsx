@@ -1,3 +1,4 @@
+
 export interface DropdownProps {
     /* The unique field name */
     id: string;
@@ -7,4 +8,6 @@ export interface DropdownProps {
 
     /* The field value */
     value?: any;
+
+    style?: any;
 }

@@ -27,6 +27,31 @@ export class Form extends React.Component<FormProps, FormState> {
     }
 
     /**
+     * Executes the validation rule for the field and updates the form errors
+     * @param {string} fieldName - The field to validate
+     * @returns {string} - The error message
+     */
+    private validate = (fieldName: string): string => {
+        let newError: string = "";
+
+        if (
+            this.props.fields[fieldName] &&
+            this.props.fields[fieldName].validation
+        ) {
+            newError = this.props.fields[fieldName].validation!.rule(
+                this.state.values,
+                fieldName,
+                this.props.fields[fieldName].validation!.args
+            );
+        }
+        this.state.errors[fieldName] = newError;
+        this.setState({
+            errors: { ...this.state.errors, [fieldName]: newError }
+        });
+        return newError;
+    };
+
+    /**
      * Returns whether there are any errors in the errors object that is passed in
      * @param {Errors} errors - The field errors
      */
@@ -87,7 +112,8 @@ export class Form extends React.Component<FormProps, FormState> {
         const {submitSuccess, errors} = this.state;
         const context: FormContext = {
             ...this.state,
-            setValues: this.setValues
+            setValues: this.setValues,
+            validate: this.validate
         };
         return (
             <FormCtx.Provider value={context}>

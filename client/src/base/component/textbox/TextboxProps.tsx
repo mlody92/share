@@ -4,4 +4,10 @@ export interface TextboxProps {
 
     /* The field value */
     value?: any;
+
+
+    style?: any;
+
+    onChange?: any;
+    onBlur?: any;
 }

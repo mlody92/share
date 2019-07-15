@@ -1,4 +1,6 @@
 /* The available editors for the field */
+import {Validation} from "../form/Validation";
+
 type Editor = "textbox" | "multilinetextbox" | "dropdown";
 
 export interface FieldProps {
@@ -16,4 +18,6 @@ export interface FieldProps {
 
     /* The field value */
     value?: any;
+
+    validation?: Validation;
 }
