@@ -1,33 +1,24 @@
 import * as React from "react";
 import {MultiTextboxProps} from "./MultiTextboxProps";
-import {FormCtx} from "../form/Form";
 import {FormContext} from "../form/FormContext";
 
-export const MultiTextbox = ({id, value, style}: MultiTextboxProps) => {
-
+export function MultiTextbox(props: MultiTextboxProps) {
     const onChange = (context: FormContext) => (e: React.FormEvent<HTMLTextAreaElement>) => {
-        context.setValues({[id]: e.currentTarget.value})
+        context.setValues({[props.id]: e.currentTarget.value})
     };
 
-    const onBlur = (context: FormContext) =>(e: React.FormEvent<HTMLTextAreaElement>) => {
-        context.validate(id)
+    const onBlur = (context: FormContext) => (e: React.FormEvent<HTMLTextAreaElement>) => {
+        context.validate(props.id)
     };
 
     return (
-        <FormCtx.Consumer>
-            {(context: FormContext) => (
-                <textarea
-                    id={id}
-                    value={value}
-                    onChange={onChange(context)}
-                    onBlur={onBlur(context)}
-                    className="form-control"
-                    style={style}
-                />
-            )}
-        </FormCtx.Consumer>
+        <textarea
+            id={props.id}
+            value={props.value}
+            onChange={onChange(props.context)}
+            onBlur={onBlur(props.context)}
+            className="form-control"
+            style={props.style}
+        />
     );
-};
-
-
-export default MultiTextbox;
+}

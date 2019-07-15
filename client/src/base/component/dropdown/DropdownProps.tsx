@@ -1,3 +1,5 @@
+import * as React from "react";
+import {FormContext} from "../form/FormContext";
 
 export interface DropdownProps {
     /* The unique field name */
@@ -9,5 +11,6 @@ export interface DropdownProps {
     /* The field value */
     value?: any;
 
-    style?: any;
+    style?: React.CSSProperties;
+    context: FormContext;
 }

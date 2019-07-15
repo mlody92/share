@@ -1,53 +1,27 @@
 import * as React from "react";
 import {TextboxProps} from "./TextboxProps";
-
+import {FormContext} from "../form/FormContext";
 
 export function Textbox(props: TextboxProps) {
+    const onChange = (context: FormContext) => (e: React.FormEvent<HTMLInputElement>) => {
+        context.setValues({[props.id]: e.currentTarget.value})
+    };
+
+    const onBlur = (context: FormContext) => (e: React.FormEvent<HTMLInputElement>) => {
+        context.validate(props.id)
+    };
+
     return (
         <input
             id={props.id}
             type="text"
             value={props.value}
-            onChange={props.onChange}
-            onBlur={props.onBlur}
+            onChange={onChange(props.context)}
+            onBlur={onBlur(props.context)}
             className="form-control"
             style={props.style}
+
         />
     );
 }
-
-
-// export const Textbox = ({id, value, style}: TextboxProps) => {
-//     const onChange = (context: FormContext) => (e: React.FormEvent<HTMLInputElement>) => {
-//         context.setValues({[id]: e.currentTarget.value})
-//     };
-//
-//     const onBlur = (context: FormContext) => (e: React.FormEvent<HTMLInputElement>) => {
-//         context.validate(id)
-//     };
-//     const getError = (errors: Errors): string => (errors ? errors[id] : "");
-//     return (
-//         <FormCtx.Consumer>
-//             {(context: FormContext) => (
-//                 <>
-//                     <input
-//                         id={id}
-//                         type="text"
-//                         value={value}
-//                         onChange={onChange(context)}
-//                         onBlur={onBlur(context)}
-//                         className="form-control"
-//                         style={style}
-//                     />
-//                     {getError(context.errors) && (
-//                         <div style={{color: "red", fontSize: "80%"}}>
-//                             <p>{getError(context.errors)}</p>
-//                         </div>
-//                     )}
-//                 </>
-//             )}
-//         </FormCtx.Consumer>
-//     );
-// };
-
 

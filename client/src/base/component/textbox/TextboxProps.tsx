@@ -1,3 +1,6 @@
+import * as React from "react";
+import {FormContext} from "../form/FormContext";
+
 export interface TextboxProps {
     /* The unique field name */
     id: string;
@@ -5,9 +8,7 @@ export interface TextboxProps {
     /* The field value */
     value?: any;
 
+    style?: React.CSSProperties;
 
-    style?: any;
-
-    onChange?: any;
-    onBlur?: any;
+    context:FormContext;
 }
