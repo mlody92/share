@@ -32,7 +32,7 @@ export const SignUp: React.FunctionComponent = () => {
     };
     return (
         <Form
-            action="http://localhost:8080/api/signup"
+            action="http://localhost:8080/api/signup2"
             fields={fields}
             render={() => (
                 <React.Fragment>

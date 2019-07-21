@@ -1,11 +1,15 @@
 package com.arokis.share.user;
 
+import com.arokis.general.json.ResponseJson;
 import com.arokis.share.user.model.User;
 import com.arokis.share.user.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -43,13 +47,5 @@ public class UserController {
             return "/user/add";
         }
         return "redirect:/users";
-    }
-
-
-    @RequestMapping(value = "/api/signup", method = RequestMethod.POST)
-    @CrossOrigin(origins = "http://localhost:3000")
-    public String saveUser2() throws Exception {
-        //todo zwracanie wyjątku
-        throw new Exception("an error");
     }
 }
