@@ -1,5 +1,7 @@
 package com.arokis.general.json;
 
+import com.arokis.general.exception.ErrorResponse;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -12,8 +14,20 @@ public class JsonBuilder {
         return new JsonBuilder();
     }
 
+    public JsonBuilder add(String name, boolean value) {
+        list.add(new Param(name, String.valueOf(value)));
+        return this;
+    }
+
     public JsonBuilder add(String name, String value) {
         list.add(new Param(name, value));
+        return this;
+    }
+
+    public JsonBuilder add(String name, Collection<Object> value) {
+        for (Object obj : value) {
+            list.add(new Param(name, obj.toString()));
+        }
         return this;
     }
 

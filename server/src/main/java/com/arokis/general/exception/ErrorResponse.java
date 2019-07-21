@@ -1,5 +1,7 @@
 package com.arokis.general.exception;
 
+import com.arokis.general.json.JsonBuilder;
+
 import javax.validation.Path;
 import java.util.*;
 
@@ -96,5 +98,30 @@ public class ErrorResponse {
                 errorToAdd.createOrAdd(pathSplit, level + 1, msg);
             }
         }
+
+        @Override
+        public String toString() {
+            JsonBuilder jsonBuilder = JsonBuilder.create().add("field", field);
+            if (!message.isEmpty()) {
+                jsonBuilder.add("message", message);
+            }
+            if (!errorParams.isEmpty()) {
+//                jsonBuilder.add("errorParams", errorParams);
+            }
+            return jsonBuilder.toString();
+
+        }
+    }
+
+    @Override
+    public String toString() {
+        JsonBuilder jsonBuilder = JsonBuilder.create().add("success", success);
+        if (!error.isEmpty()) {
+            jsonBuilder.add("error", error);
+        }
+        if (errorField != null) {
+//            jsonBuilder.add("errorField", )
+        }
+        return jsonBuilder.toString();
     }
 }
