@@ -1,7 +1,5 @@
 package com.arokis.general.exception;
 
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,7 +8,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.Set;
 
 
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -21,9 +18,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                                                    WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setSuccess(false);
-        errorResponse.setError("Nieprawidłowe parametry.");
+        errorResponse.setMessage("Nieprawidłowe parametry.");
         for (ConstraintViolation<?> constraintViolation : ex.getConstraintViolations()) {
-            errorResponse.createOrAdd(constraintViolation.getPropertyPath(), constraintViolation.getMessage());
+            errorResponse.addErrorField(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage());
         }
 
 //        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), "Record still have reference from other table",

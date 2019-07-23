@@ -1,7 +1,5 @@
 package com.arokis.general.json;
 
-import com.arokis.general.exception.ErrorResponse;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -12,6 +10,13 @@ public class JsonBuilder {
 
     public static JsonBuilder create() {
         return new JsonBuilder();
+
+    }
+
+    public static JsonBuilder createAsArray() {
+        JsonBuilder jsonBuilder = new JsonBuilder();
+        jsonBuilder.asArray();
+        return jsonBuilder;
     }
 
     public JsonBuilder add(String name, boolean value) {
@@ -20,14 +25,12 @@ public class JsonBuilder {
     }
 
     public JsonBuilder add(String name, String value) {
-        list.add(new Param(name, value));
+        list.add(new Param(name, "\"" + value + "\""));
         return this;
     }
 
-    public JsonBuilder add(String name, Collection<Object> value) {
-        for (Object obj : value) {
-            list.add(new Param(name, obj.toString()));
-        }
+    //todo
+    public <T> JsonBuilder add(String name, Collection<T> value) {
         return this;
     }
 
@@ -41,7 +44,6 @@ public class JsonBuilder {
         return this;
     }
 
-
     public String toString() {
         String result = asArray ? "[" : "{";
         result += String.join(",", listToString());
@@ -52,6 +54,10 @@ public class JsonBuilder {
         Collection<String> result = new ArrayList<>();
         list.forEach(x -> result.add(x.toString()));
         return result;
+    }
+
+    private void asArray() {
+        asArray = true;
     }
 
     class Param {
@@ -71,7 +77,7 @@ public class JsonBuilder {
             } else {
                 valueString = value[0];
             }
-            return param + ":" + valueString;
+            return "\"" + param + "\":" + valueString;
         }
     }
 }

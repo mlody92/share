@@ -1,15 +1,12 @@
 package com.arokis.general.exception;
 
-import com.arokis.general.json.JsonBuilder;
-
-import javax.validation.Path;
 import java.util.*;
 
 public class ErrorResponse {
 
     private boolean success;
-    private String error;
-    private Error errorField;
+    private String message;
+    private Collection<Error> errors = new ArrayList<>();
 
     public boolean isSuccess() {
         return success;
@@ -19,109 +16,56 @@ public class ErrorResponse {
         this.success = success;
     }
 
-    public String getError() {
-        return error;
+    public String getMessage() {
+        return message;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public Error getErrorField() {
-        return errorField;
+    public Collection<Error> getErrors() {
+        return errors;
     }
 
-    public void setErrorField(Error errorField) {
-        this.errorField = errorField;
+    public void setErrors(Collection<Error> errors) {
+        this.errors = errors;
     }
 
-    public void createOrAdd(Path path, String message) {
-        String[] split = path.toString().split("\\.");
-        if (split.length == 0) {
-            return;
+    public void addErrorField(String path, String msg) {
+        if (errors == null) {
+            errors = new ArrayList<>();
         }
-        if (errorField == null) {
-            Error er = new Error();
-            er.setField(split[0]);
-            errorField = er;
-        }
-        errorField.createOrAdd(split, 1, message);
+        errors.add(Error.create(path, msg));
     }
 
-    class Error {
+    static class Error {
 
         private String field;
-        private Collection<Error> errorParams = new ArrayList<>();
         private String message;
 
+        static Error create(String field, String message) {
+            Error er = new Error();
+            er.setField(field);
+            er.setMessage(message);
+            return er;
+        }
 
         public String getField() {
             return field;
         }
 
-        public void setField(String field) {
+        void setField(String field) {
             this.field = field;
-        }
-
-        public Collection<Error> getErrorParams() {
-            return errorParams;
         }
 
         public String getMessage() {
             return message;
         }
 
-        public void setMessage(String message) {
+        void setMessage(String message) {
             this.message = message;
         }
-
-        public void createOrAdd(String[] pathSplit, int level, String msg) {
-            if (pathSplit.length == 0 || level > pathSplit.length - 1) {
-                return;
-            }
-
-            for (Error er : errorParams) {
-                if (er.getField().equals(pathSplit[level])) {
-                    er.createOrAdd(pathSplit, level + 1, msg);
-                    return;
-                }
-            }
-            if (level == pathSplit.length - 1) {
-                Error errorToAdd = new Error();
-                errorToAdd.setField(pathSplit[level]);
-                errorToAdd.setMessage(msg);
-                errorParams.add(errorToAdd);
-            } else {
-                Error errorToAdd = new Error();
-                errorToAdd.setField(pathSplit[level]);
-                errorParams.add(errorToAdd);
-                errorToAdd.createOrAdd(pathSplit, level + 1, msg);
-            }
-        }
-
-        @Override
-        public String toString() {
-            JsonBuilder jsonBuilder = JsonBuilder.create().add("field", field);
-            if (!message.isEmpty()) {
-                jsonBuilder.add("message", message);
-            }
-            if (!errorParams.isEmpty()) {
-//                jsonBuilder.add("errorParams", errorParams);
-            }
-            return jsonBuilder.toString();
-
-        }
     }
 
-    @Override
-    public String toString() {
-        JsonBuilder jsonBuilder = JsonBuilder.create().add("success", success);
-        if (!error.isEmpty()) {
-            jsonBuilder.add("error", error);
-        }
-        if (errorField != null) {
-//            jsonBuilder.add("errorField", )
-        }
-        return jsonBuilder.toString();
-    }
 }
