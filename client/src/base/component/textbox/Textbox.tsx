@@ -2,7 +2,7 @@ import * as React from "react";
 import {TextboxProps} from "./TextboxProps";
 import {FormContext} from "../form/FormContext";
 
-export function Textbox(props: TextboxProps) {
+export const Textbox = (props: TextboxProps) => {
     const onChange = (context: FormContext) => (e: React.FormEvent<HTMLInputElement>) => {
         context.setValues({[props.id]: e.currentTarget.value})
     };
@@ -14,7 +14,7 @@ export function Textbox(props: TextboxProps) {
     return (
         <input
             id={props.id}
-            type="text"
+            type={props.type}
             value={props.value}
             onChange={onChange(props.context)}
             onBlur={onBlur(props.context)}
@@ -23,5 +23,9 @@ export function Textbox(props: TextboxProps) {
 
         />
     );
-}
+};
+
+Textbox.defaultProps = {
+    type: "textbox"
+};
 

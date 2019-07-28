@@ -30,7 +30,7 @@ export const Field = (props: FieldProps) => {
                 <div className="form-group">
                     {props.label && <label htmlFor={props.id}>{props.label}</label>}
 
-                    {props.editor!.toLowerCase() === "textbox" && <Textbox id={props.id} value={props.value} style={getEditorStyle(context.errors)} context={context}  />}
+                    {props.editor!.toLowerCase() === "textbox" && <Textbox id={props.id} value={props.value} style={getEditorStyle(context.errors)} context={context} type={props.type}  />}
 
                     {props.editor!.toLowerCase() === "multilinetextbox" && <MultiTextbox id={props.id} value={props.value} style={getEditorStyle(context.errors)} context={context}/>}
 

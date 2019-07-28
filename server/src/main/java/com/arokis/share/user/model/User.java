@@ -22,7 +22,7 @@ public class User implements Serializable {
     private String email;
 
     @NotNull
-    @JsonIgnore
+//    @JsonIgnore
     @Size(max = 32)
     private String password;
 
@@ -41,7 +41,7 @@ public class User implements Serializable {
     private LocalDateTime dateRemove;
 
     @NotNull
-    private int permission_id;
+    private int permission_id = 1;
 
     @NotNull
     private Boolean confirm = false;
