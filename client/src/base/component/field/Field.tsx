@@ -15,7 +15,7 @@ export const Field = (props: FieldProps) => {
      * @param {IErrors} errors - All the errors from the form
      * @returns {string[]} - The validation error
      */
-    const getError = (errors: Errors): string => (errors ? errors[props.id] : "asdasdasdasd");
+    const getError = (errors: Errors): string => (errors ? errors[props.id] : "");
 
     /** Gets the inline styles for editor
      * @param {IErrors} errors - All the errors from the form
