@@ -5,12 +5,12 @@ CREATE TABLE public.user
   password      character varying(36) NOT NULL, --md5 32 + 4 salt
   name          character varying(20) NOT NULL,
   surname       character varying(30) NOT NULL,
-  dateCreate   timestamp without time zone,
-  dateRemove   timestamp without time zone,
+  date_create   timestamp without time zone,
+  date_remove   timestamp without time zone,
   permission_id integer               NOT NULL DEFAULT 1,
   confirm        boolean               NOT NULL DEFAULT false,
   CONSTRAINT user_pkey PRIMARY KEY (id),
-  CONSTRAINT unique_constraint UNIQUE (email, dateRemove)
+  CONSTRAINT unique_constraint UNIQUE (email, date_remove)
 )
   WITH
 (

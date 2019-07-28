@@ -1,6 +1,7 @@
 package com.arokis.share.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.bytebuddy.implementation.bind.annotation.Default;
 
 import javax.persistence.*;
@@ -22,7 +23,6 @@ public class User implements Serializable {
     private String email;
 
     @NotNull
-//    @JsonIgnore
     @Size(max = 32)
     private String password;
 
@@ -62,10 +62,13 @@ public class User implements Serializable {
         this.email = email;
     }
 
+
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
