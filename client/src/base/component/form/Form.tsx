@@ -74,7 +74,6 @@ export class Form extends React.Component<FormProps, FormState> {
     ): Promise<void> => {
         e.preventDefault();
 
-        console.log(this.state.values);
 
         if (this.validateForm()) {
             const submitSuccess: boolean = await this.submitForm();
@@ -91,7 +90,7 @@ export class Form extends React.Component<FormProps, FormState> {
         Object.keys(this.props.fields).map((fieldName: string) => {
             errors[fieldName] = this.validate(fieldName);
         });
-        this.setState({ errors });
+        this.setState({errors});
         return !this.haveErrors(errors);
     }
 
@@ -110,16 +109,15 @@ export class Form extends React.Component<FormProps, FormState> {
                 body: JSON.stringify(this.state.values)
             });
             if (response.status === 400) {
-                /* Map the validation errors to IErrors */
+                /* Map the validation errors to Errors */
                 let responseBody: any;
                 responseBody = await response.json();
                 const errors: Errors = {};
-                Object.keys(responseBody).map((key: string) => {
-                    // For ASP.NET core, the field names are in title case - so convert to camel case
-                    const fieldName = key.charAt(0).toLowerCase() + key.substring(1);
-                    errors[fieldName] = responseBody[key];
+                responseBody.errors.forEach((obj: any) => {
+                    const fieldName = obj.field.toLowerCase();
+                    errors[fieldName] = obj.message;
                 });
-                this.setState({ errors });
+                this.setState({errors});
             }
             return response.ok;
         } catch (ex) {

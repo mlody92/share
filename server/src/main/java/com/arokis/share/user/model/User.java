@@ -1,6 +1,7 @@
 package com.arokis.share.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import net.bytebuddy.implementation.bind.annotation.Default;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -34,7 +35,7 @@ public class User implements Serializable {
     private String surname;
 
     @Column(name = "date_create")
-    private LocalDateTime dateCreate;
+    private LocalDateTime dateCreate = LocalDateTime.now();
 
     @Column(name = "date_remove")
     private LocalDateTime dateRemove;
@@ -43,7 +44,7 @@ public class User implements Serializable {
     private int permission_id;
 
     @NotNull
-    private Boolean active;
+    private Boolean confirm = false;
 
     public Long getId() {
         return id;
@@ -109,11 +110,11 @@ public class User implements Serializable {
         this.permission_id = permission_id;
     }
 
-    public Boolean getActive() {
-        return active;
+    public Boolean getConfirm() {
+        return confirm;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public void setConfirm(Boolean confirm) {
+        this.confirm = confirm;
     }
 }

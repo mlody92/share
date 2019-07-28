@@ -17,7 +17,7 @@ public class JsonBuilderTest {
         );
 
 
-        Assert.assertEquals(json.toString(), "{user:{name:John,email:email@gmail.com,warning:[email to short,name to short]}}");
+        Assert.assertEquals(json.toString(), "{\"user\":{\"name\":\"John\",\"email\":\"email@gmail.com\",\"warning\":[email to short,name to short]}}");
     }
 
 }

@@ -20,11 +20,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         errorResponse.setSuccess(false);
         errorResponse.setMessage("Nieprawidłowe parametry.");
         for (ConstraintViolation<?> constraintViolation : ex.getConstraintViolations()) {
-            errorResponse.addErrorField(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage());
+            String[] path = constraintViolation.getPropertyPath().toString().split("\\.");
+            errorResponse.addErrorField(path[path.length - 1], constraintViolation.getMessage());
         }
-
-//        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), "Record still have reference from other table",
-//                request.getDescription(false));
         return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
     }
 

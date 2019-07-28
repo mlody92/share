@@ -8,7 +8,7 @@ CREATE TABLE public.user
   dateCreate   timestamp without time zone,
   dateRemove   timestamp without time zone,
   permission_id integer               NOT NULL DEFAULT 1,
-  active        boolean               NOT NULL DEFAULT false,
+  confirm        boolean               NOT NULL DEFAULT false,
   CONSTRAINT user_pkey PRIMARY KEY (id),
   CONSTRAINT unique_constraint UNIQUE (email, dateRemove)
 )

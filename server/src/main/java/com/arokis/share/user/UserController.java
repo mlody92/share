@@ -29,7 +29,7 @@ public class UserController {
     @RequestMapping(value = "/user/save", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") User user) {
         user.setDateCreate(LocalDateTime.now());
-        user.setActive(false);
+        user.setConfirm(false);
         user.setEmail("test@test");
         user.setName("name");
         user.setSurname("surname");

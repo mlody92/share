@@ -31,11 +31,10 @@ public class UserRestController {
 
     @RequestMapping(value = "/api/signup2", method = RequestMethod.POST)
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity saveUser2(@Valid @RequestBody User user, Errors errors) {
+    public ResponseEntity saveUser2(@Valid @RequestBody User user) {
         ResponseJson response = new ResponseJson();
-        response.setData(user);
-
         response.setSuccess(true);
+        response.setData(user);
         userRepository.save(user);
         return new ResponseEntity<ResponseJson>(response, HttpStatus.OK);
     }
