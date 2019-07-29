@@ -9,8 +9,7 @@ CREATE TABLE public.user
   date_remove   timestamp without time zone,
   permission_id integer               NOT NULL DEFAULT 1,
   confirm        boolean               NOT NULL DEFAULT false,
-  CONSTRAINT user_pkey PRIMARY KEY (id),
-  CONSTRAINT unique_constraint UNIQUE (email, date_remove)
+  CONSTRAINT user_pkey PRIMARY KEY (id)
 )
   WITH
 (
@@ -20,3 +19,9 @@ CREATE TABLE public.user
 
 ALTER TABLE public."user"
   OWNER to postgres;
+
+CREATE UNIQUE INDEX user_unique_not_null ON public.user (email, date_remove)
+WHERE date_remove IS NOT NULL;
+
+CREATE UNIQUE INDEX user_unique_null ON public.user (email)
+WHERE date_remove IS NULL;
