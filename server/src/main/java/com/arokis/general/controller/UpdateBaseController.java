@@ -1,41 +1,32 @@
 package com.arokis.general.controller;
 
 import com.arokis.general.exception.ErrorResponse;
+import com.arokis.general.json.JsonBuilder;
 import com.arokis.general.json.ResponseJson;
-import com.arokis.share.user.model.User;
-import com.arokis.share.user.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Validated
 @RestController
 public class UpdateBaseController<T> {
 
     @Autowired
-    private JpaRepository<T, Long> repository;
+    private UpdateRepository<T> updateRepository;
 
-    public ResponseEntity save(@Valid @RequestBody T user, Errors errors) {
-        ResponseJson response = new ResponseJson();
+    public ResponseEntity save(@Valid @RequestBody T obj, Errors errors) {
         try {
-            repository.save((T) user);
-            response.setSuccess(true);
+            updateRepository.save(obj);
         } catch (Exception ex) {
-            ErrorResponse errorResponse = new ErrorResponse();
-            errorResponse.setSuccess(false);
-            errorResponse.setMessage(ex.getMessage());
-            return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(ResponseJson.failure(ex.getMessage()), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<ResponseJson>(response, HttpStatus.OK);
+        return new ResponseEntity<String>(ResponseJson.success("Operacja zapisu przebiegła pomyślnie."), HttpStatus.OK);
     }
 
 

@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Validated
-@RestController
+
 public class UserRestController extends UpdateBaseController<User> {
 
     @Autowired
