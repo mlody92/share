@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user", schema = "public")
+@Table(name = "user", schema = "public", uniqueConstraints = {@UniqueConstraint(columnNames = {"email", "date_remove"})})
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

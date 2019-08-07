@@ -58,13 +58,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
 
-    @ExceptionHandler(value = {Exception.class})
-    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-        System.out.println("EXCEPTION:");
-
-//        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage()+" Custom Error",
-//                request.getDescription(false));
-        return new ResponseEntity("b", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler(value = {Exception.class})
+//    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
+//        System.out.println(ex.getMessage());
+//
+////        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage()+" Custom Error",
+////                request.getDescription(false));
+//        return new ResponseEntity("b", HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
 }
