@@ -46,7 +46,7 @@ export class Form extends React.Component<FormProps, FormState> {
         }
         this.state.errors[fieldName] = newError;
         this.setState({
-            errors: { ...this.state.errors, [fieldName]: newError }
+            errors: {...this.state.errors, [fieldName]: newError}
         });
         return newError;
     };
@@ -117,7 +117,8 @@ export class Form extends React.Component<FormProps, FormState> {
                     const fieldName = obj.field.toLowerCase();
                     errors[fieldName] = obj.message;
                 });
-                this.setState({errors});
+                const submitMessage = responseBody.message;
+                this.setState({errors, submitMessage});
             }
             return response.ok;
         } catch (ex) {
@@ -134,7 +135,7 @@ export class Form extends React.Component<FormProps, FormState> {
     };
 
     render() {
-        const {submitSuccess, errors} = this.state;
+        const {submitSuccess, submitMessage, errors} = this.state;
         const context: FormContext = {
             ...this.state,
             setValues: this.setValues,
@@ -158,19 +159,19 @@ export class Form extends React.Component<FormProps, FormState> {
                         </div>
                         {submitSuccess && (
                             <div className="alert alert-info" role="alert">
-                                The form was successfully submitted!
+                                The form was successfully submitted! {submitMessage}
                             </div>
                         )}
                         {submitSuccess === false &&
                         !this.haveErrors(errors) && (
                             <div className="alert alert-danger" role="alert">
-                                Sorry, an unexpected error has occurred
+                                Sorry, an unexpected error has occurred {submitMessage}
                             </div>
                         )}
                         {submitSuccess === false &&
                         this.haveErrors(errors) && (
                             <div className="alert alert-danger" role="alert">
-                                Sorry, the form is invalid. Please review, adjust and try again
+                                Sorry, the form is invalid. Please review, adjust and try again {submitMessage}
                             </div>
                         )}
                     </div>

@@ -10,4 +10,5 @@ export interface FormState {
 
     /* Whether the form has been successfully submitted */
     submitSuccess?: boolean;
+    submitMessage?: string;
 }
