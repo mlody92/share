@@ -17,6 +17,15 @@ import java.sql.SQLException;
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     // ex. unique key exist
+    @ExceptionHandler(value = {OperationException.class})
+    public ResponseEntity<Object> handleConstraint(OperationException ex,
+                                                   WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setSuccess(false);
+        errorResponse.setMessage(ex.getMessage());
+        return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(value = {SQLException.class})
     public ResponseEntity<Object> handleConstraint(SQLException ex,
                                                    WebRequest request) {

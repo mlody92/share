@@ -12,7 +12,7 @@ import javax.validation.Valid;
 public abstract class UpdateBaseController<T> {
 
 
-    public ResponseEntity save(@Valid @RequestBody T obj, Errors errors) {
+    public ResponseEntity save(T obj, Errors errors) {
         try {
             getRepository().save(obj);
         } catch (Exception ex) {

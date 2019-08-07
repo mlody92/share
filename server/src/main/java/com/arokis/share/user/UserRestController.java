@@ -35,10 +35,9 @@ public class UserRestController extends UpdateBaseController<User> {
     }
 
     @RequestMapping(value = "/api/signup2", method = RequestMethod.POST)
-    public ResponseEntity saveUser2(@Valid @RequestBody User user, Errors errors) {
+    public ResponseEntity saveUser2(@Valid @RequestBody User user, Errors errors) throws OperationException {
         if (!getUserDao().isEmailAvailable(user.getEmail())) {
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-//            throw new OperationException("Podany e-mail jest już zajęty. Wprowadź inny");
+            throw new OperationException("Podany e-mail jest już zajęty.");
         }
         return super.save(user, errors);
     }
