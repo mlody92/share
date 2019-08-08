@@ -1,7 +1,6 @@
 import * as React from "react";
 import {FormState} from "./FormState";
 import {FormProps} from "./FormProps";
-import {Errors} from "./Errors";
 import {Response} from "./Response";
 import {Values} from "./Values";
 import {FormContext} from "./FormContext";
@@ -56,7 +55,7 @@ export class Form extends React.Component<FormProps, FormState> {
 
     /**
      * Returns whether there are any errors in the errors object that is passed in
-     * @param {Errors} errors - The field errors
+     * @param {Response} response
      */
     private haveErrors(response: Response) {
         let haveError: boolean = false;
@@ -89,7 +88,7 @@ export class Form extends React.Component<FormProps, FormState> {
      * @returns {boolean} - Whether the form is valid or not
      */
     private validateForm(): boolean {
-        const response : Response = {errors: {}};
+        const response: Response = {errors: {}};
         Object.keys(this.props.fields).map((fieldName: string) => {
             response.errors[fieldName] = this.validate(fieldName);
         });
@@ -115,13 +114,11 @@ export class Form extends React.Component<FormProps, FormState> {
                 /* Map the validation errors to Errors */
                 let responseBody: any;
                 responseBody = await responseServer.json();
-
-                const errors: Errors = {};
+                const response: Response = {message: responseBody.message, errors: {}};
                 responseBody.errors.forEach((obj: any) => {
                     const fieldName = obj.field.toLowerCase();
-                    errors[fieldName] = obj.message;
+                    response.errors[fieldName] = obj.message;
                 });
-                const response = {message: responseBody.message, errors};
                 this.setState({response});
             }
             return responseServer.ok;
@@ -163,7 +160,7 @@ export class Form extends React.Component<FormProps, FormState> {
                         </div>
                         {submitSuccess && (
                             <div className="alert alert-info" role="alert">
-                                The form was successfully submitted!  {response.message}
+                                The form was successfully submitted! {response.message}
                             </div>
                         )}
                         {submitSuccess === false &&
@@ -176,7 +173,7 @@ export class Form extends React.Component<FormProps, FormState> {
                         this.haveErrors(response) && (
                             <div className="alert alert-danger" role="alert">
                                 Sorry, the form is invalid. Please review, adjust and try
-                                again  {response.message}
+                                again {response.message}
                             </div>
                         )}
                     </div>
