@@ -10,4 +10,5 @@ export interface FormProps {
 
     /* A prop which allows content to be injected */
     render: () => React.ReactNode
+    beforeSend?: () => React.ReactNode
 }

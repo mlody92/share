@@ -52,3 +52,12 @@ export const minLength = (
     values[fieldName] && values[fieldName].length <= length
         ? `This can not exceed ${length} characters`
         : "";
+
+export const sameAs = (
+    values: Values,
+    fieldName: string,
+    fieldName2: string
+): string =>
+    values[fieldName] !== values[fieldName2]
+        ? `Value in ${fieldName} is not same as ${fieldName2}`
+        : "";

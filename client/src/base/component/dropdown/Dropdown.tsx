@@ -13,7 +13,6 @@ export function Dropdown(props: DropdownProps) {
     };
 
     return (
-
         <select
             id={props.id}
             name={props.id}

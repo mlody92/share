@@ -58,6 +58,7 @@ export class Form extends React.Component<FormProps, FormState> {
                 haveError = true;
             }
         });
+        console.log(response);
         return haveError;
     }
 

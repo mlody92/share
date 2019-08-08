@@ -1,9 +1,8 @@
 import * as React from "react";
 import {Form} from "../base/component/form/Form";
 import {Field} from "../base/component/field/Field";
-import {isEmail, maxLength, minLength, required} from "../base/component/form/Validator";
+import {isEmail, minLength, required, sameAs} from "../base/component/form/Validator";
 import {Fields} from "../base/component/form/Fields";
-// import {required, isEmail, maxLength} from "../base/component/form/Validator";
 
 export const SignUp: React.FunctionComponent = () => {
     const fields: Fields = {
@@ -12,26 +11,21 @@ export const SignUp: React.FunctionComponent = () => {
             label: "Name",
             validation: [{rule: required}]
         },
-        surname: {
-            id: "surname",
-            label: "Surname",
-            validation: [{rule: required}]
-        },
         email: {
             id: "email",
             label: "Email",
-            validation: [{rule: isEmail}, {rule: required}, {rule: maxLength, args: 3}]
+            validation: [{rule: isEmail}, {rule: required}]
         },
         password: {
             id: "password",
             label: "Password",
-            validation: [{rule: required}, {rule: minLength, args: 8}],
+            validation: [{rule: required}, {rule: minLength, args: 1}],
             type: "password"
         },
         confirmPassword: {
-            id: "passwordConfirm",
+            id: "confirmPassword",
             label: "Confirm Password",
-            // validation: [{rule: required}],
+            validation: [{rule: required}, {rule: minLength, args: 1}, {rule: sameAs, args: "password"}],
             type: "password"
         }
     };
@@ -45,7 +39,6 @@ export const SignUp: React.FunctionComponent = () => {
                         Sign up.
                     </div>
                     <Field {...fields.name} />
-                    <Field {...fields.surname} />
                     <Field {...fields.email} />
                     <Field {...fields.password} />
                     <Field {...fields.confirmPassword} />
