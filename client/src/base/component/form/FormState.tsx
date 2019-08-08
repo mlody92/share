@@ -1,14 +1,13 @@
 import {Values} from "./Values";
-import {Errors} from "./Errors";
+import {Response} from "./Response";
 
 export interface FormState {
     /* The field values */
     values: Values;
 
     /* The field validation error messages */
-    errors: Errors;
+    response: Response;
 
     /* Whether the form has been successfully submitted */
     submitSuccess?: boolean;
-    submitMessage?: string;
 }

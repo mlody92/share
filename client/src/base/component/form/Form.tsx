@@ -2,6 +2,7 @@ import * as React from "react";
 import {FormState} from "./FormState";
 import {FormProps} from "./FormProps";
 import {Errors} from "./Errors";
+import {Response} from "./Response";
 import {Values} from "./Values";
 import {FormContext} from "./FormContext";
 
@@ -18,11 +19,11 @@ export class Form extends React.Component<FormProps, FormState> {
     constructor(props: FormProps) {
         super(props);
 
-        const errors: Errors = {};
+        const response: Response = {message: '', errors: {}};
         const values: Values = {};
         this.state = {
-            errors,
-            values
+            values,
+            response
         };
     }
 
@@ -44,9 +45,11 @@ export class Form extends React.Component<FormProps, FormState> {
                 this.props.fields[fieldName].validation!.args
             );
         }
-        this.state.errors[fieldName] = newError;
+        this.state.response.errors[fieldName] = newError;
         this.setState({
-            errors: {...this.state.errors, [fieldName]: newError}
+            response: {
+                errors: {...this.state.response.errors, [fieldName]: newError}
+            }
         });
         return newError;
     };
@@ -55,10 +58,10 @@ export class Form extends React.Component<FormProps, FormState> {
      * Returns whether there are any errors in the errors object that is passed in
      * @param {Errors} errors - The field errors
      */
-    private haveErrors(errors: Errors) {
+    private haveErrors(response: Response) {
         let haveError: boolean = false;
-        Object.keys(errors).map((key: string) => {
-            if (errors[key].length > 0) {
+        Object.keys(response.errors).map((key: string) => {
+            if (response.errors[key].length > 0) {
                 haveError = true;
             }
         });
@@ -86,12 +89,12 @@ export class Form extends React.Component<FormProps, FormState> {
      * @returns {boolean} - Whether the form is valid or not
      */
     private validateForm(): boolean {
-        const errors: Errors = {};
+        const response : Response = {errors: {}};
         Object.keys(this.props.fields).map((fieldName: string) => {
-            errors[fieldName] = this.validate(fieldName);
+            response.errors[fieldName] = this.validate(fieldName);
         });
-        this.setState({errors});
-        return !this.haveErrors(errors);
+        this.setState({response});
+        return !this.haveErrors(response);
     }
 
     /**
@@ -100,7 +103,7 @@ export class Form extends React.Component<FormProps, FormState> {
      */
     private async submitForm(): Promise<boolean> {
         try {
-            const response = await fetch(this.props.action, {
+            const responseServer = await fetch(this.props.action, {
                 method: "post",
                 headers: new Headers({
                     "Content-Type": "application/json",
@@ -108,19 +111,20 @@ export class Form extends React.Component<FormProps, FormState> {
                 }),
                 body: JSON.stringify(this.state.values)
             });
-            if (response.status === 400) {
+            if (responseServer.status === 400) {
                 /* Map the validation errors to Errors */
                 let responseBody: any;
-                responseBody = await response.json();
+                responseBody = await responseServer.json();
+
                 const errors: Errors = {};
                 responseBody.errors.forEach((obj: any) => {
                     const fieldName = obj.field.toLowerCase();
                     errors[fieldName] = obj.message;
                 });
-                const submitMessage = responseBody.message;
-                this.setState({errors, submitMessage});
+                const response = {message: responseBody.message, errors};
+                this.setState({response});
             }
-            return response.ok;
+            return responseServer.ok;
         } catch (ex) {
             return false;
         }
@@ -135,7 +139,7 @@ export class Form extends React.Component<FormProps, FormState> {
     };
 
     render() {
-        const {submitSuccess, submitMessage, errors} = this.state;
+        const {submitSuccess, response} = this.state;
         const context: FormContext = {
             ...this.state,
             setValues: this.setValues,
@@ -152,26 +156,27 @@ export class Form extends React.Component<FormProps, FormState> {
                             <button
                                 type="submit"
                                 className="btn btn-primary"
-                                disabled={this.haveErrors(errors)}
+                                disabled={this.haveErrors(response)}
                             >
                                 Submit
                             </button>
                         </div>
                         {submitSuccess && (
                             <div className="alert alert-info" role="alert">
-                                The form was successfully submitted! {submitMessage}
+                                The form was successfully submitted!  {response.message}
                             </div>
                         )}
                         {submitSuccess === false &&
-                        !this.haveErrors(errors) && (
+                        !this.haveErrors(response) && (
                             <div className="alert alert-danger" role="alert">
-                                Sorry, an unexpected error has occurred {submitMessage}
+                                Sorry, an unexpected error has occurred {response.message}
                             </div>
                         )}
                         {submitSuccess === false &&
-                        this.haveErrors(errors) && (
+                        this.haveErrors(response) && (
                             <div className="alert alert-danger" role="alert">
-                                Sorry, the form is invalid. Please review, adjust and try again {submitMessage}
+                                Sorry, the form is invalid. Please review, adjust and try
+                                again  {response.message}
                             </div>
                         )}
                     </div>

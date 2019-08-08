@@ -30,16 +30,16 @@ export const Field = (props: FieldProps) => {
                 <div className="form-group">
                     {props.label && <label htmlFor={props.id}>{props.label}</label>}
 
-                    {props.editor!.toLowerCase() === "textbox" && <Textbox id={props.id} value={props.value} style={getEditorStyle(context.errors)} context={context} type={props.type}  />}
+                    {props.editor!.toLowerCase() === "textbox" && <Textbox id={props.id} value={props.value} style={getEditorStyle(context.response.errors)} context={context} type={props.type}  />}
 
-                    {props.editor!.toLowerCase() === "multilinetextbox" && <MultiTextbox id={props.id} value={props.value} style={getEditorStyle(context.errors)} context={context}/>}
+                    {props.editor!.toLowerCase() === "multilinetextbox" && <MultiTextbox id={props.id} value={props.value} style={getEditorStyle(context.response.errors)} context={context}/>}
 
-                    {props.editor!.toLowerCase() === "dropdown" && <Dropdown id={props.id} value={props.value} options={props.options} style={getEditorStyle(context.errors)} context={context}/>}
+                    {props.editor!.toLowerCase() === "dropdown" && <Dropdown id={props.id} value={props.value} options={props.options} style={getEditorStyle(context.response.errors)} context={context}/>}
 
                     {/* TODO - display validation error */}
-                    {getError(context.errors) && (
+                    {getError(context.response.errors) && (
                         <div style={{color: "red", fontSize: "80%"}}>
-                            <p>{getError(context.errors)}</p>
+                            <p>{getError(context.response.errors)}</p>
                         </div>
                     )}
                 </div>
