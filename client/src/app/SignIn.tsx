@@ -1,12 +1,11 @@
 import * as React from "react";
 import {Form} from "../base/component/form/Form";
 import {Field} from "../base/component/field/Field";
-import {Map} from "../base/component/form/Map";
+import {Fields} from "../base/component/form/Fields";
 import {required, isEmail, maxLength} from "../base/component/form/Validator";
-import {FieldProps} from "../base/component/field/FieldProps";
 
 export const SignIn: React.FunctionComponent = () => {
-    const fields: Map<FieldProps> = {
+    const fields: Fields = {
         name: {
             id: "name",
             label: "Name",

@@ -1,13 +1,12 @@
 import * as React from "react";
 import {Form} from "../base/component/form/Form";
 import {Field} from "../base/component/field/Field";
-import {Map} from "../base/component/form/Map";
-import {required, isEmail, maxLength, minLength} from "../base/component/form/Validator";
-import {FieldProps} from "../base/component/field/FieldProps";
+import {isEmail, maxLength, minLength, required} from "../base/component/form/Validator";
+import {Fields} from "../base/component/form/Fields";
 // import {required, isEmail, maxLength} from "../base/component/form/Validator";
 
 export const SignUp: React.FunctionComponent = () => {
-    const fields: Map<FieldProps> = {
+    const fields: Fields = {
         name: {
             id: "name",
             label: "Name",
@@ -21,12 +20,12 @@ export const SignUp: React.FunctionComponent = () => {
         email: {
             id: "email",
             label: "Email",
-            validation: [{rule: isEmail},{rule: required},{ rule: maxLength, args: 3 }]
+            validation: [{rule: isEmail}, {rule: required}, {rule: maxLength, args: 3}]
         },
         password: {
             id: "password",
             label: "Password",
-            validation: [{rule: required}, {rule: minLength, args:8}],
+            validation: [{rule: required}, {rule: minLength, args: 8}],
             type: "password"
         },
         confirmPassword: {

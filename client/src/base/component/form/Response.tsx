@@ -1,6 +1,6 @@
-import {Map} from "./Map";
+import {Errors} from "./Errors";
 
 export interface Response {
-    errors: Map<string>;
+    errors: Errors;
     message?: string;
 }

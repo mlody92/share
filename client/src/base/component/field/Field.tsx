@@ -2,10 +2,10 @@ import * as React from "react";
 import {Textbox} from "../textbox/Textbox";
 import {Dropdown} from "../dropdown/Dropdown";
 import {FieldProps} from "./FieldProps";
-import {Map} from "../form/Map";
 import {FormContext} from "../form/FormContext";
 import {FormCtx} from "../form/Form";
 import {MultiTextbox} from "../textbox/MultiTextbox";
+import {Errors} from "../form/Errors";
 
 
 export const Field = (props: FieldProps) => {
@@ -15,13 +15,13 @@ export const Field = (props: FieldProps) => {
      * @param {IErrors} errors - All the errors from the form
      * @returns {string[]} - The validation error
      */
-    const getError = (errors: Map<string>): string => (errors ? errors[props.id] : "");
+    const getError = (errors: Errors): string => (errors ? errors[props.id] : "");
 
     /** Gets the inline styles for editor
      * @param {IErrors} errors - All the errors from the form
      * @returns {any} - The style object
      */
-    const getEditorStyle = (errors: Map<string>): any =>
+    const getEditorStyle = (errors: Errors): any =>
         getError(errors) ? { borderColor: "red" } : {};
 
     return (
