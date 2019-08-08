@@ -1,33 +1,34 @@
 import * as React from "react";
 import {Form} from "../base/component/form/Form";
 import {Field} from "../base/component/field/Field";
-import {Fields} from "../base/component/form/Fields";
+import {Map} from "../base/component/form/Map";
 import {required, isEmail, maxLength} from "../base/component/form/Validator";
+import {FieldProps} from "../base/component/field/FieldProps";
 
 export const SignIn: React.FunctionComponent = () => {
-    const fields: Fields = {
+    const fields: Map<FieldProps> = {
         name: {
             id: "name",
             label: "Name",
-            validation: { rule: required }
+            validation: [{ rule: required }]
         },
         email: {
             id: "email",
             label: "Email",
-            validation: { rule: isEmail }
+            validation: [{ rule: isEmail }]
         },
         reason: {
             id: "reason",
             label: "Reason",
             editor: "dropdown",
             options: ["", "Marketing", "Support", "Feedback", "Jobs"],
-            validation: { rule: required }
+            validation: [{ rule: required }]
         },
         notes: {
             id: "notes",
             label: "Notes",
             editor: "multilinetextbox",
-            validation: { rule: maxLength, args: 1000 }
+            validation: [{ rule: maxLength, args: 1000 }]
         }
     };
     return (

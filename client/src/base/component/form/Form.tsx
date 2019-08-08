@@ -17,12 +17,9 @@ export const FormCtx = React.createContext<FormContext | undefined>(
 export class Form extends React.Component<FormProps, FormState> {
     constructor(props: FormProps) {
         super(props);
-
-        const response: Response = {message: '', errors: {}};
-        const values: Values = {};
         this.state = {
-            values,
-            response
+            values: {},
+            response: {errors: {}}
         };
     }
 
@@ -34,15 +31,12 @@ export class Form extends React.Component<FormProps, FormState> {
     private validate = (fieldName: string): string => {
         let newError: string = "";
 
-        if (
-            this.props.fields[fieldName] &&
-            this.props.fields[fieldName].validation
-        ) {
-            newError = this.props.fields[fieldName].validation!.rule(
-                this.state.values,
-                fieldName,
-                this.props.fields[fieldName].validation!.args
-            );
+        if (this.props.fields[fieldName] && this.props.fields[fieldName].validation) {
+            this.props.fields[fieldName].validation!.some((value => {
+                // todo czy wyświetlać wszystkie błędy walidacji?
+                newError = value.rule(this.state.values, fieldName, value.args);
+                return newError;
+            }));
         }
         this.state.response.errors[fieldName] = newError;
         this.setState({

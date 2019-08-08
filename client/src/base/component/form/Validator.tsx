@@ -42,3 +42,13 @@ export const maxLength = (
     values[fieldName] && values[fieldName].length > length
         ? `This can not exceed ${length} characters`
         : "";
+
+
+export const minLength = (
+    values: Values,
+    fieldName: string,
+    length: number
+): string =>
+    values[fieldName] && values[fieldName].length <= length
+        ? `This can not exceed ${length} characters`
+        : "";

@@ -1,8 +1,8 @@
 import * as React from "react";
-import {MultiTextboxProps} from "./MultiTextboxProps";
 import {FormContext} from "../form/FormContext";
+import {ComponentProps} from "../ComponentProps";
 
-export function MultiTextbox(props: MultiTextboxProps) {
+export function MultiTextbox(props: ComponentProps) {
     const onChange = (context: FormContext) => (e: React.FormEvent<HTMLTextAreaElement>) => {
         context.setValues({[props.id]: e.currentTarget.value})
     };

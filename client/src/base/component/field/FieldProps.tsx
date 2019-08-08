@@ -19,6 +19,6 @@ export interface FieldProps {
     /* The field value */
     value?: any;
 
-    validation?: Validation;
+    validation?: Array<Validation>;
     type?: string
 }

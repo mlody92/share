@@ -1,47 +1,40 @@
 import * as React from "react";
 import {Form} from "../base/component/form/Form";
 import {Field} from "../base/component/field/Field";
-import {Fields} from "../base/component/form/Fields";
-import {required, isEmail} from "../base/component/form/Validator";
+import {Map} from "../base/component/form/Map";
+import {required, isEmail, maxLength, minLength} from "../base/component/form/Validator";
+import {FieldProps} from "../base/component/field/FieldProps";
 // import {required, isEmail, maxLength} from "../base/component/form/Validator";
 
 export const SignUp: React.FunctionComponent = () => {
-    const fields: Fields = {
+    const fields: Map<FieldProps> = {
         name: {
             id: "name",
             label: "Name",
-            validation: {rule: required}
+            validation: [{rule: required}]
         },
         surname: {
             id: "surname",
             label: "Surname",
-            validation: {rule: required}
+            validation: [{rule: required}]
         },
         email: {
             id: "email",
             label: "Email",
-            validation: {rule: isEmail}
+            validation: [{rule: isEmail},{rule: required},{ rule: maxLength, args: 3 }]
         },
         password: {
             id: "password",
             label: "Password",
-            validation: {rule: required},
+            validation: [{rule: required}, {rule: minLength, args:8}],
+            type: "password"
+        },
+        confirmPassword: {
+            id: "passwordConfirm",
+            label: "Confirm Password",
+            // validation: [{rule: required}],
             type: "password"
         }
-        /*,
-        reason: {
-            id: "reason",
-            label: "Reason",
-            editor: "dropdown",
-            options: ["", "Marketing", "Support", "Feedback", "Jobs"],
-            validation: {rule: required}
-        },
-        notes: {
-            id: "notes",
-            label: "Notes",
-            editor: "multilinetextbox",
-            validation: {rule: maxLength, args: 1000}
-        }*/
     };
     return (
         <Form
@@ -56,8 +49,7 @@ export const SignUp: React.FunctionComponent = () => {
                     <Field {...fields.surname} />
                     <Field {...fields.email} />
                     <Field {...fields.password} />
-                    {/*<Field {...fields.reason} />*/}
-                    {/*<Field {...fields.notes} />*/}
+                    <Field {...fields.confirmPassword} />
                 </React.Fragment>
             )}
         />
