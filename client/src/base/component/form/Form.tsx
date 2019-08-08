@@ -111,7 +111,7 @@ export class Form extends React.Component<FormProps, FormState> {
                 body: JSON.stringify(this.state.values)
             });
             if (responseServer.status === 400) {
-                /* Map the validation errors to Errors */
+                /* Map the validation errors to Map */
                 let responseBody: any;
                 responseBody = await responseServer.json();
                 const response: Response = {message: responseBody.message, errors: {}};

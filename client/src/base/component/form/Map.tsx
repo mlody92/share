@@ -1,4 +1,4 @@
-export interface Errors {
+export interface Map<T> {
     /* The validation error messages for each field (key is the field name */
-    [key: string]: string;
+    [key: string]: T;
 }
