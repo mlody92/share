@@ -28,8 +28,7 @@ export class SignUp extends React.Component <SignUpProps, SignUpState> {
         });
     };
 
-    backBtn = () => {
-        console.log("BACKBTN");
+    backBtn = (e: React.MouseEvent) => {
         e.preventDefault();
         this.setState({
             activeForm: "form-signin"
