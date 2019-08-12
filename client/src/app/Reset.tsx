@@ -2,6 +2,7 @@ import * as React from "react";
 import {Form} from "../base/component/form/Form";
 import {Fields} from "../base/component/form/Fields";
 import {isEmail, maxLength, required} from "../base/component/form/Validator";
+import {Field} from "../base/component/field/Field";
 
 interface SignUpProps {
     backBtn: (e: React.MouseEvent) => void;
@@ -25,8 +26,7 @@ export class Reset extends React.Component <SignUpProps, SignUpState> {
                     submitBtn={"Reset Password"}
                     render={() => (
                         <React.Fragment>
-                            <input type="email" id="resetEmail" className="form-control" placeholder="Email address"
-                                   required={true} autoFocus={true}/>
+                            <Field {...fields.email}/>
                         </React.Fragment>
                     )}
                 />
@@ -39,8 +39,10 @@ export class Reset extends React.Component <SignUpProps, SignUpState> {
 
 const fields: Fields = {
     email: {
-        id: "email",
+        type: "email",
+        id: "resetEmail",
         validation: [{rule: isEmail}, {rule: required}, {rule: maxLength, args: 40}],
-        placeholder: "Email"
+        placeholder: "Email",
+        autoFocus: true
     },
 };
