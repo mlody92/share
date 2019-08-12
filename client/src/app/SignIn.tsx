@@ -54,10 +54,8 @@ export class SignIn extends React.Component <SignUpProps, SignUpState> {
                             <form className="form-signin">
                                 <h1 className="h3 mb-3 font-weight-normal" style={{textAlign: "center"}}> Sign in</h1>
                                 <div className="social-login">
-                                    <Button className={"btn facebook-btn social-btn"} iconCls={"fab fa-facebook-f"}
-                                            value={" Sign in with Facebook"}/>
-                                    <Button className={"btn google-btn social-btn"} iconCls={"fab fa-google-plus-g"}
-                                            value={" Sign in with Google+"}/>
+                                    <Button className={"btn facebook-btn social-btn"} iconCls={"fab fa-facebook-f"} value={" Sign in with Facebook"}/>
+                                    <Button className={"btn google-btn social-btn"} iconCls={"fab fa-google-plus-g"} value={" Sign in with Google+"}/>
                                 </div>
                                 <p style={{textAlign: "center"}}> OR </p>
                                 <Field {...fields.email} />
