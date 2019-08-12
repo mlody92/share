@@ -2,7 +2,7 @@ import * as React from 'react';
 import './App.css';
 
 import logo from './logo.svg';
-import {SignUp} from "./app/SignUp";
+import {SignIn} from "./app/SignIn";
 
 interface User {
     id: number;
@@ -70,7 +70,7 @@ class App extends React.Component<AppProps, AppState> {
                 </header>
                 {/*<UserList/>*/}
                 {/*<SignIn/>*/}
-                <SignUp/>
+                <SignIn/>
             </div>
         );
     }
