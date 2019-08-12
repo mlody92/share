@@ -20,5 +20,7 @@ export interface FieldProps {
     value?: any;
 
     validation?: Array<Validation>;
-    type?: string
+    type?: string;
+    placeholder?:string;
+    autoFocus?: boolean
 }

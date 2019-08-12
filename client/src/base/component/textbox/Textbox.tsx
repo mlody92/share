@@ -20,7 +20,8 @@ export const Textbox = (props: TextboxProps) => {
             onBlur={onBlur(props.context)}
             className="form-control"
             style={props.style}
-
+            placeholder={props.placeholder}
+            autoFocus={props.autoFocus}
         />
     );
 };

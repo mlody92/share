@@ -15,6 +15,10 @@ export const FormCtx = React.createContext<FormContext | undefined>(
 
 
 export class Form extends React.Component<FormProps, FormState> {
+    static defaultProps = {
+        submitBtn: "Submit"
+    } as FormProps;
+
     constructor(props: FormProps) {
         super(props);
         this.state = {
@@ -58,7 +62,6 @@ export class Form extends React.Component<FormProps, FormState> {
                 haveError = true;
             }
         });
-        console.log(response);
         return haveError;
     }
 
@@ -139,20 +142,20 @@ export class Form extends React.Component<FormProps, FormState> {
         };
         return (
             <FormCtx.Provider value={context}>
-                <form onSubmit={this.handleSubmit} noValidate={true}>
+                <form onSubmit={this.handleSubmit} noValidate={true} className={this.props.className}>
                     <div className="container">
 
                         {this.props.render()}
 
-                        <div className="form-group">
-                            <button
-                                type="submit"
-                                className="btn btn-primary"
-                                disabled={this.haveErrors(response)}
-                            >
-                                Submit
-                            </button>
-                        </div>
+                        {/*<div className="form-group">*/}
+                        <button
+                            type="submit"
+                            className="btn btn-primary  btn-block"
+                            disabled={this.haveErrors(response)}
+                        >
+                            {this.props.submitBtn}
+                        </button>
+                        {/*</div>*/}
                         {submitSuccess && (
                             <div className="alert alert-info" role="alert">
                                 The form was successfully submitted! {response.message}

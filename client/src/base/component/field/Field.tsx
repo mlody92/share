@@ -27,10 +27,11 @@ export const Field = (props: FieldProps) => {
     return (
         <FormCtx.Consumer>
             {(context: FormContext) => (
-                <div className="form-group">
+                // <div className="form-group">
+                <div >
                     {props.label && <label htmlFor={props.id}>{props.label}</label>}
 
-                    {props.editor!.toLowerCase() === "textbox" && <Textbox id={props.id} value={props.value} style={getEditorStyle(context.response.errors)} context={context} type={props.type}  />}
+                    {props.editor!.toLowerCase() === "textbox" && <Textbox id={props.id} value={props.value} style={getEditorStyle(context.response.errors)} context={context} type={props.type} placeholder={props.placeholder} autoFocus={props.autoFocus}  />}
 
                     {props.editor!.toLowerCase() === "multilinetextbox" && <MultiTextbox id={props.id} value={props.value} style={getEditorStyle(context.response.errors)} context={context}/>}
 
