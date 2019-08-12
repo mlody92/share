@@ -28,6 +28,14 @@ export class SignUp extends React.Component <SignUpProps, SignUpState> {
         });
     };
 
+    backBtn = () => {
+        console.log("BACKBTN");
+        e.preventDefault();
+        this.setState({
+            activeForm: "form-signin"
+        });
+    };
+
 
     render() {
         let activeForm;
@@ -68,7 +76,7 @@ export class SignUp extends React.Component <SignUpProps, SignUpState> {
                 )}
             />;
         } else if (this.state.activeForm === "form-reset") {
-            activeForm = <Reset/>;
+            activeForm = <Reset backBtn={this.backBtn}/>;
         } else if (this.state.activeForm === "form-signup") {
             activeForm = <Form
                 action="http://localhost:8080/api/signup2"

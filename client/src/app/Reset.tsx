@@ -4,6 +4,7 @@ import {Fields} from "../base/component/form/Fields";
 import {isEmail, maxLength, required} from "../base/component/form/Validator";
 
 interface SignUpProps {
+    backBtn: () => (e: React.MouseEvent) =>void;
 }
 
 interface SignUpState {
@@ -15,12 +16,6 @@ export class Reset extends React.Component <SignUpProps, SignUpState> {
         super(props);
     }
 
-    onClick = (className: string) => (e: React.MouseEvent) => {
-        e.preventDefault();
-        this.setState({
-            activeForm: className
-        });
-    };
 
     render() {
         return (
@@ -38,7 +33,7 @@ export class Reset extends React.Component <SignUpProps, SignUpState> {
                         </React.Fragment>
                     )}
                 />
-                <a href="#" id="cancel_reset" onClick={this.onClick("form-signin")}><i
+                <a href="#" id="cancel_reset" onClick={this.props.backBtn}><i
                     className="fas fa-angle-left"/> Back</a>
             </div>
         );
