@@ -50,7 +50,7 @@ export const minLength = (
     length: number
 ): string =>
     values[fieldName] && values[fieldName].length <= length
-        ? `This can not exceed ${length} characters`
+        ? `This must be least ${length} characters`
         : "";
 
 export const sameAs = (

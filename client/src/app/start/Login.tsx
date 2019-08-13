@@ -3,38 +3,68 @@ import './start.css';
 import {Reset} from "./Reset";
 import {SignUp} from "./SignUp";
 import {SignIn} from "./SignIn";
+import {Fields} from "../../base/component/form/Fields";
+import {isEmail, maxLength, minLength, required, sameAs} from "../../base/component/form/Validator";
 
 interface LoginProps {
 }
 
 interface LoginState {
-    activeForm: string;
+    activeForm: number;
+}
+
+enum LoginForm {
+    SIGN_UP,
+    SIGN_IN,
+    RESET
 }
 
 export class Login extends React.Component <LoginProps, LoginState> {
-    constructor(props: LoginProps) {
-        super(props);
+    state = {
+        activeForm: LoginForm.SIGN_IN
+    };
 
-        this.state = {
-            activeForm: "form-signin"
-        }
-    }
-
-    onClick = (className: string) => (e: React.MouseEvent) => {
+    onClick = (loginForm: number) => (e: React.MouseEvent) => {
         e.preventDefault();
         this.setState({
-            activeForm: className
+            activeForm: loginForm
         });
     };
 
     render() {
-        if (this.state.activeForm === "form-reset") {
-            return <Reset backBtn={this.onClick("form-signin")}/>;
-        } else if (this.state.activeForm === "form-signup") {
-            return <SignUp backBtn={this.onClick("form-signin")}/>
+        if (this.state.activeForm === LoginForm.RESET) {
+            return <Reset backBtn={this.onClick(LoginForm.SIGN_IN)}/>
+        } else if (this.state.activeForm === LoginForm.SIGN_UP) {
+            return <SignUp backBtn={this.onClick(LoginForm.SIGN_IN)}/>
         }
-        return <SignIn forgotBtn={this.onClick("form-reset")} signUpBtn={this.onClick("form-signup")}/>
+        return <SignIn forgotBtn={this.onClick(LoginForm.RESET)} signUpBtn={this.onClick(LoginForm.SIGN_UP)}/>
     }
 }
+
+export const LoginFields: Fields = {
+    name: {
+        id: "name",
+        validation: [{rule: required}, {rule: maxLength, args: 20}],
+        placeholder: "Imie",
+        autoFocus: true
+    },
+    email: {
+        id: "email",
+        validation: [{rule: isEmail}, {rule: required}, {rule: maxLength, args: 40}],
+        placeholder: "Email"
+    },
+    password: {
+        id: "password",
+        validation: [{rule: required}, {rule: minLength, args: 8}],
+        type: "password",
+        placeholder: "Password"
+    },
+    repeatPassword: {
+        id: "repeatPassword",
+        validation: [{rule: required}, {rule: minLength, args: 8}, {rule: sameAs, args: "password"}],
+        type: "password",
+        placeholder: "Repeat Password"
+    }
+};
 
 

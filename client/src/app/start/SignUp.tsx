@@ -1,10 +1,9 @@
 import * as React from "react";
 import './start.css';
 import {Form} from "../../base/component/form/Form";
-import {Fields} from "../../base/component/form/Fields";
-import {required, isEmail, maxLength, minLength, sameAs} from "../../base/component/form/Validator";
 import {Field} from "../../base/component/field/Field";
 import {Button} from "../../base/component/button/Button";
+import {LoginFields} from "./Login";
 
 interface SignInProps {
     backBtn: (e: React.MouseEvent) => void;
@@ -14,16 +13,12 @@ interface SignInState {
 }
 
 export class SignUp extends React.Component <SignInProps, SignInState> {
-    constructor(props: SignInProps) {
-        super(props);
-    }
-
     render() {
         return (
             <div id="logreg-forms">
                 <Form
                     action="http://localhost:8080/api/signup2"
-                    fields={fields}
+                    fields={LoginFields}
                     className="form-signup"
                     render={() => (
                         <React.Fragment>
@@ -37,10 +32,10 @@ export class SignUp extends React.Component <SignInProps, SignInState> {
 
                             <p style={{textAlign: "center"}}>OR</p>
 
-                            <Field {...fields.name}/>
-                            <Field {...fields.email} />
-                            <Field {...fields.password} />
-                            <Field {...fields.repeatPassword} />
+                            <Field {...LoginFields.name}/>
+                            <Field {...LoginFields.email} />
+                            <Field {...LoginFields.password} />
+                            <Field {...LoginFields.repeatPassword} />
                             <Button className="btn btn-primary btn-block" type="submit" iconCls="fas fa-user-plus" value=" Sign Up"/>
                             <a href="#" id="cancel_signup" onClick={this.props.backBtn}><i
                                 className="fas fa-angle-left"/> Back</a>
@@ -51,29 +46,3 @@ export class SignUp extends React.Component <SignInProps, SignInState> {
         );
     }
 }
-
-const fields: Fields = {
-    name: {
-        id: "name",
-        validation: [{rule: required}, {rule: maxLength, args: 20}],
-        placeholder: "Imie",
-        autoFocus: true
-    },
-    email: {
-        id: "email",
-        validation: [{rule: isEmail}, {rule: required}, {rule: maxLength, args: 40}],
-        placeholder: "Email"
-    },
-    password: {
-        id: "password",
-        validation: [{rule: required}, {rule: minLength, args: 8}],
-        type: "password",
-        placeholder: "Password"
-    },
-    repeatPassword: {
-        id: "repeatPassword",
-        validation: [{rule: required}, {rule: minLength, args: 8}, {rule: sameAs, args: "password"}],
-        type: "password",
-        placeholder: "Repeat Password"
-    }
-};
