@@ -11,6 +11,5 @@ export interface FormProps {
     /* A prop which allows content to be injected */
     render: () => React.ReactNode
     className? : string;
-    submitBtnHtml?: () => React.ReactNode
     submitBtnValue?: string;
 }

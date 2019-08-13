@@ -1,8 +1,10 @@
 import * as React from "react";
+import './start.css';
 import {Form} from "../../base/component/form/Form";
 import {Fields} from "../../base/component/form/Fields";
 import {isEmail, maxLength, required} from "../../base/component/form/Validator";
 import {Field} from "../../base/component/field/Field";
+import {Button} from "../../base/component/button/Button";
 
 interface SignUpProps {
     backBtn: (e: React.MouseEvent) => void;
@@ -23,15 +25,16 @@ export class Reset extends React.Component <SignUpProps, SignUpState> {
                     action="http://localhost:8080/api/reset"
                     fields={fields}
                     className="form-reset"
-                    submitBtnValue={"Reset Password"}
                     render={() => (
                         <React.Fragment>
                             <Field {...fields.email}/>
+                            <Button type="submit" className={"btn btn-primary  btn-block"} iconCls={"fas fa-key"}
+                                    value={" Reset Password"}/>
+                            <a href="#" id="cancel_reset" onClick={this.props.backBtn}><i
+                                className="fas fa-angle-left"/> Back</a>
                         </React.Fragment>
                     )}
                 />
-                <a href="#" id="cancel_reset" onClick={this.props.backBtn}><i
-                    className="fas fa-angle-left"/> Back</a>
             </div>
         );
     }

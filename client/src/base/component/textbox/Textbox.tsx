@@ -7,9 +7,9 @@ export const Textbox = (props: TextboxProps) => {
         context.setValues({[props.id]: e.currentTarget.value})
     };
 
-    const onBlur = (context: FormContext) => (e: React.FormEvent<HTMLInputElement>) => {
-        context.validate(props.id)
-    };
+    // const onBlur = (context: FormContext) => (e: React.FormEvent<HTMLInputElement>) => {
+    //     context.validate(props.id)
+    // };
 
     return (
         <input
@@ -17,7 +17,7 @@ export const Textbox = (props: TextboxProps) => {
             type={props.type}
             value={props.value}
             onChange={onChange(props.context)}
-            onBlur={onBlur(props.context)}
+            // onBlur={onBlur(props.context)}
             className="form-control"
             style={props.style}
             placeholder={props.placeholder}

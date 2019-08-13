@@ -1,49 +1,25 @@
 import * as React from "react";
+import './start.css';
 import {Form} from "../../base/component/form/Form";
 import {Fields} from "../../base/component/form/Fields";
-import {Reset} from "./Reset";
-import {SignUp} from "./SignUp";
 import {Button} from "../../base/component/button/Button";
 import {isEmail, maxLength, minLength, required} from "../../base/component/form/Validator";
 import {Field} from "../../base/component/field/Field";
 
 interface SignUpProps {
+    forgotBtn: (e: React.MouseEvent) => void;
+    signUpBtn: (e: React.MouseEvent) => void;
 }
 
 interface SignUpState {
-    activeForm: string;
 }
 
 export class SignIn extends React.Component <SignUpProps, SignUpState> {
     constructor(props: SignUpProps) {
         super(props);
-
-        this.state = {
-            activeForm: "form-signin"
-        }
     }
 
-    onClick = (className: string) => (e: React.MouseEvent) => {
-        e.preventDefault();
-        this.setState({
-            activeForm: className
-        });
-    };
-
-    backBtn = (e: React.MouseEvent) => {
-        e.preventDefault();
-        this.setState({
-            activeForm: "form-signin"
-        });
-    };
-
-
     render() {
-        if (this.state.activeForm === "form-reset") {
-            return <Reset backBtn={this.backBtn}/>;
-        } else if (this.state.activeForm === "form-signup") {
-            return <SignUp backBtn={this.backBtn}/>
-        }
         return (
             <div id="logreg-forms">
                 <Form
@@ -59,28 +35,23 @@ export class SignIn extends React.Component <SignUpProps, SignUpState> {
                                 <Button className={"btn google-btn social-btn"} iconCls={"fab fa-google-plus-g"}
                                         value={" Sign in with Google+"}/>
                             </div>
-                            <p style={{textAlign: "center"}}> OR </p>
+                            <hr/>
                             <Field {...fields.email} />
                             <Field {...fields.password} />
                             <Button type="submit" className={"btn btn-success btn-block"} iconCls={"fas fa-sign-in-alt"}
                                     value={" Sign in"}/>
-
+                            <a href="#" id="forgot_pswd" onClick={this.props.forgotBtn}>Forgot password?</a>
+                            <hr/>
+                            <Button id={"btn-signup"} className={"btn btn-primary btn-block"}
+                                    iconCls={"fas fa-user-plus"} value={" Sign up New Account"}
+                                    onClick={this.props.signUpBtn}/>
                         </React.Fragment>
                     )}
                 />
-                <div className="logform">
-                    {/*<p>Don't have an account!</p>  */}
-                    <a href="#" id="forgot_pswd" onClick={this.onClick("form-reset")}>Forgot password?</a>
-                    <hr/>
-                    <Button id={"btn-signup"} className={"btn btn-primary btn-block"}
-                            iconCls={"fas fa-user-plus"} value={" Sign up New Account"}
-                            onClick={this.onClick("form-signup")}/>
-                </div>
             </div>
         );
     }
 }
-
 
 const fields: Fields = {
     email: {
@@ -96,3 +67,5 @@ const fields: Fields = {
         placeholder: "Password"
     }
 };
+
+

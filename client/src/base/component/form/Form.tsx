@@ -146,7 +146,6 @@ export class Form extends React.Component<FormProps, FormState> {
 
                     {/*<div className="form-group">*/}
 
-                    {this.props.submitBtnHtml && (this.props.submitBtnHtml())}
                     {this.props.submitBtnValue && (<button
                         type="submit"
                         className="btn btn-primary  btn-block"
