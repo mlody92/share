@@ -27,6 +27,7 @@ export class Reset extends React.Component <SignUpProps, SignUpState> {
                     className="form-reset"
                     render={() => (
                         <React.Fragment>
+                            <h1 className="h3 mb-3 font-weight-normal" style={{textAlign: "center"}}> Reset password</h1>
                             <Field {...fields.email}/>
                             <Button type="submit" className={"btn btn-primary  btn-block"} iconCls={"fas fa-key"}
                                     value={" Reset Password"}/>

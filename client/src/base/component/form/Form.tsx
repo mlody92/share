@@ -1,6 +1,5 @@
 import * as React from "react";
-import {FormState} from "./FormState";
-import {FormProps} from "./FormProps";
+import {FormProps, FormState} from "./FormPS";
 import {Response} from "./Response";
 import {Values} from "./Values";
 import {FormContext} from "./FormContext";

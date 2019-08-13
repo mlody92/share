@@ -1,5 +1,7 @@
 import * as React from "react";
 import {Fields} from "./Fields";
+import {Values} from "./Values";
+import {Response} from "./Response";
 
 export interface FormProps {
     /* The http path that the form will be posted to */
@@ -13,3 +15,15 @@ export interface FormProps {
     className? : string;
     submitBtnValue?: string;
 }
+
+export interface FormState {
+    /* The field values */
+    values: Values;
+
+    /* The field validation error messages */
+    response: Response;
+
+    /* Whether the form has been successfully submitted */
+    submitSuccess?: boolean;
+}
+

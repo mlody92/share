@@ -1,4 +1,4 @@
-import {FormState} from "./FormState";
+import {FormState} from "./FormPS";
 import {Values} from "./Values";
 
 export interface FormContext extends FormState {

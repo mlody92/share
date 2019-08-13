@@ -27,6 +27,7 @@ export class SignUp extends React.Component <SignInProps, SignInState> {
                     className="form-signup"
                     render={() => (
                         <React.Fragment>
+                            <h1 className="h3 mb-3 font-weight-normal" style={{textAlign: "center"}}> Sign up</h1>
                             <div className="social-login">
                                 <Button className="btn facebook-btn social-btn" iconCls="fab fa-facebook-f" value=" Sign up with Facebook"/>
                             </div>
