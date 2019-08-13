@@ -3,6 +3,7 @@ import {FormProps, FormState} from "./FormPS";
 import {Response} from "./Response";
 import {Values} from "./Values";
 import {FormContext} from "./FormContext";
+import {Button} from "../button/Button";
 
 /*
  * The context which allows state and functions to be shared with Field.
@@ -31,8 +32,8 @@ export class Form extends React.Component<FormProps, FormState> {
     private validate = (fieldName: string): string => {
         let newError: string = "";
 
-        if (this.props.fields[fieldName] && this.props.fields[fieldName].validation) {
-            this.props.fields[fieldName].validation!.some((value => {
+        if (this.props.formFields[fieldName] && this.props.formFields[fieldName].validation) {
+            this.props.formFields[fieldName].validation!.some((value => {
                 // todo czy wyświetlać wszystkie błędy walidacji?
                 newError = value.rule(this.state.values, fieldName, value.args);
                 return newError;
@@ -83,7 +84,7 @@ export class Form extends React.Component<FormProps, FormState> {
      */
     private validateForm(): boolean {
         const response: Response = {errors: {}};
-        Object.keys(this.props.fields).map((fieldName: string) => {
+        Object.keys(this.props.formFields).map((fieldName: string) => {
             response.errors[fieldName] = this.validate(fieldName);
         });
         this.setState({response});
@@ -139,14 +140,15 @@ export class Form extends React.Component<FormProps, FormState> {
         return (
             <FormCtx.Provider value={context}>
                 <form onSubmit={this.handleSubmit} noValidate={true} className={this.props.className}>
-                    {this.props.render()}
-                    {this.props.submitBtnValue && (<button
-                        type="submit"
-                        className="btn btn-primary  btn-block"
-                        disabled={this.haveErrors(response)}
-                    >
-                        {this.props.submitBtnValue}
-                    </button>)}
+                    {this.props.fieldsHtml()}
+                    {/*submit*/}
+                    {typeof this.props.submit === "object" &&
+                    <Button type="submit" className={this.props.submit.className} disabled={this.haveErrors(response)} iconCls={this.props.submit.iconCls}
+                            value={this.props.submit.value}/>}
+                    {typeof this.props.submit === "string" &&
+                    <Button type="submit" className="btn btn-primary btn-block" disabled={this.haveErrors(response)} value={this.props.submit}/>}
+
+                    {/*submit info*/}
                     {submitSuccess && (
                         <div className="alert alert-info" role="alert">
                             The form was successfully submitted! {response.message}
@@ -165,6 +167,7 @@ export class Form extends React.Component<FormProps, FormState> {
                             again {response.message}
                         </div>
                     )}
+                    {this.props.finalHtml && this.props.finalHtml()}
                 </form>
             </FormCtx.Provider>
         );

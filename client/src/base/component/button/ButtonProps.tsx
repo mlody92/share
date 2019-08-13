@@ -7,4 +7,5 @@ export interface ButtonProps {
     value?: string
     onClick?: (e: React.MouseEvent) => void
     iconCls?: string
+    disabled:boolean
 }

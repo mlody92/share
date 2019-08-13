@@ -33,9 +33,9 @@ export class SignIn extends React.Component <SignUpProps, SignUpState> {
             <div id="logreg-forms">
                 <Form
                     action="http://localhost:8080/api/signup2"
-                    fields={fields}
+                    formFields={fields}
                     className={"form-signin"}
-                    render={() => (
+                    fieldsHtml={() => (
                         <React.Fragment>
                             <h1 className="h3 mb-3 font-weight-normal" style={{textAlign: "center"}}> Sign in</h1>
                             <div className="social-login">
@@ -47,8 +47,11 @@ export class SignIn extends React.Component <SignUpProps, SignUpState> {
                             <hr/>
                             <Field {...fields.email} />
                             <Field {...fields.password} />
-                            <Button type="submit" className={"btn btn-success btn-block"} iconCls={"fas fa-sign-in-alt"}
-                                    value={" Sign in"}/>
+                        </React.Fragment>
+                    )}
+                    submit={{className: "btn btn-success btn-block", iconCls: "fas fa-sign-in-alt", value: " Sign in"}}
+                    finalHtml={() => (
+                        <React.Fragment>
                             <a href="#" id="forgot_pswd" onClick={this.props.forgotBtn}>Forgot password?</a>
                             <hr/>
                             <Button id={"btn-signup"} className={"btn btn-primary btn-block"}
@@ -56,6 +59,7 @@ export class SignIn extends React.Component <SignUpProps, SignUpState> {
                                     onClick={this.props.signUpBtn}/>
                         </React.Fragment>
                     )}
+
                 />
             </div>
         );

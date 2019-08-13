@@ -3,7 +3,7 @@ import {ButtonProps} from "./ButtonProps";
 
 export const Button = (props: ButtonProps) => {
     return (
-        <button id={props.id} type={props.type} className={props.className} onClick={props.onClick}>
+        <button id={props.id} type={props.type} className={props.className} onClick={props.onClick} disabled={props.disabled}>
             <span>
                 {props.iconCls && <i className={props.iconCls}/>}
                 {props.value}
@@ -13,5 +13,7 @@ export const Button = (props: ButtonProps) => {
 };
 
 Button.defaultProps = {
-    type: "button"
+    type: "button",
+    disabled: false,
+    className:"btn btn-primary btn-block"
 };

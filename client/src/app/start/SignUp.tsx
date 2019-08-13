@@ -17,25 +17,25 @@ export class SignUp extends React.Component <SignInProps, SignInState> {
     render() {
         const fields: Fields = {
             name: {
-                id: "name",
                 validation: [{rule: required}, {rule: maxLength, args: 20}],
+                id: "name",
                 placeholder: "Imie",
                 autoFocus: true
             },
             email: {
-                id: "email",
                 validation: [{rule: isEmail}, {rule: required}, {rule: maxLength, args: 40}],
+                id: "email",
                 placeholder: "Email"
             },
             password: {
-                id: "password",
                 validation: [{rule: required}, {rule: minLength, args: 8}],
+                id: "password",
                 type: "password",
                 placeholder: "Password"
             },
             repeatPassword: {
-                id: "repeatPassword",
                 validation: [{rule: required}, {rule: minLength, args: 8}, {rule: sameAs, args: "password"}],
+                id: "repeatPassword",
                 type: "password",
                 placeholder: "Repeat Password"
             }
@@ -44,9 +44,9 @@ export class SignUp extends React.Component <SignInProps, SignInState> {
             <div id="logreg-forms">
                 <Form
                     action="http://localhost:8080/api/signup2"
-                    fields={fields}
+                    formFields={fields}
                     className="form-signup"
-                    render={() => (
+                    fieldsHtml={() => (
                         <React.Fragment>
                             <h1 className="h3 mb-3 font-weight-normal" style={{textAlign: "center"}}> Sign up</h1>
                             <div className="social-login">
@@ -60,7 +60,12 @@ export class SignUp extends React.Component <SignInProps, SignInState> {
                             <Field {...fields.email} />
                             <Field {...fields.password} />
                             <Field {...fields.repeatPassword} />
-                            <Button className="btn btn-primary btn-block" type="submit" iconCls="fas fa-user-plus" value=" Sign Up"/>
+                        </React.Fragment>
+                    )}
+                    submit={{className: "btn btn-primary btn-block", iconCls: "fas fa-user-plus", value: " Sign Up"}}
+                    finalHtml={() => (
+                        <React.Fragment>
+                            <hr/>
                             <a href="#" id="cancel_signup" onClick={this.props.backBtn}><i
                                 className="fas fa-angle-left"/> Back</a>
                         </React.Fragment>

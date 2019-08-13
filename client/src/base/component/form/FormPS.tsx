@@ -8,11 +8,13 @@ export interface FormProps {
     action: string;
 
     /* The props for all the fields on the form */
-    fields: Fields;
+    formFields: Fields;
 
     /* A prop which allows content to be injected */
-    render: () => React.ReactNode
-    className? : string;
+    fieldsHtml: () => React.ReactNode
+    submit?: { className: string, iconCls: string, value: string } | string
+    finalHtml?: () => React.ReactNode
+    className?: string;
     submitBtnValue?: string;
 }
 
