@@ -49,7 +49,7 @@ export const minLength = (
     fieldName: string,
     length: number
 ): string =>
-    values[fieldName] && values[fieldName].length <= length
+    values[fieldName] && values[fieldName].length < length
         ? `This must be least ${length} characters`
         : "";
 

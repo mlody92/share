@@ -3,7 +3,8 @@ import './start.css';
 import {Form} from "../../base/component/form/Form";
 import {Button} from "../../base/component/button/Button";
 import {Field} from "../../base/component/field/Field";
-import {LoginFields} from "./Login";
+import {Fields} from "../../base/component/form/Fields";
+import {isEmail, maxLength, required} from "../../base/component/form/Validator";
 
 interface SignUpProps {
     forgotBtn: (e: React.MouseEvent) => void;
@@ -15,11 +16,24 @@ interface SignUpState {
 
 export class SignIn extends React.Component <SignUpProps, SignUpState> {
     render() {
+        const fields: Fields = {
+            email: {
+                id: "email",
+                validation: [{rule: isEmail}, {rule: required}, {rule: maxLength, args: 40}],
+                placeholder: "Email"
+            },
+            password: {
+                id: "password",
+                validation: [{rule: required}],
+                type: "password",
+                placeholder: "Password"
+            }
+        };
         return (
             <div id="logreg-forms">
                 <Form
                     action="http://localhost:8080/api/signup2"
-                    fields={LoginFields}
+                    fields={fields}
                     className={"form-signin"}
                     render={() => (
                         <React.Fragment>
@@ -31,8 +45,8 @@ export class SignIn extends React.Component <SignUpProps, SignUpState> {
                                         value={" Sign in with Google+"}/>
                             </div>
                             <hr/>
-                            <Field {...LoginFields.email} />
-                            <Field {...LoginFields.password} />
+                            <Field {...fields.email} />
+                            <Field {...fields.password} />
                             <Button type="submit" className={"btn btn-success btn-block"} iconCls={"fas fa-sign-in-alt"}
                                     value={" Sign in"}/>
                             <a href="#" id="forgot_pswd" onClick={this.props.forgotBtn}>Forgot password?</a>

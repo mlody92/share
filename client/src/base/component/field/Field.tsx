@@ -22,20 +22,23 @@ export const Field = (props: FieldProps) => {
      * @returns {any} - The style object
      */
     const getEditorStyle = (errors: Errors): any =>
-        getError(errors) ? { borderColor: "red" } : {};
+        getError(errors) ? {borderColor: "red"} : {};
 
     return (
         <FormCtx.Consumer>
             {(context: FormContext) => (
-                // <div className="form-group">
-                <div >
+                <React.Fragment>
                     {props.label && <label htmlFor={props.id}>{props.label}</label>}
 
-                    {props.editor!.toLowerCase() === "textbox" && <Textbox id={props.id} value={props.value} style={getEditorStyle(context.response.errors)} context={context} type={props.type} placeholder={props.placeholder} autoFocus={props.autoFocus}  />}
+                    {props.editor!.toLowerCase() === "textbox" &&
+                    <Textbox id={props.id} value={props.value} style={getEditorStyle(context.response.errors)} context={context} type={props.type}
+                             placeholder={props.placeholder} autoFocus={props.autoFocus}/>}
 
-                    {props.editor!.toLowerCase() === "multilinetextbox" && <MultiTextbox id={props.id} value={props.value} style={getEditorStyle(context.response.errors)} context={context}/>}
+                    {props.editor!.toLowerCase() === "multilinetextbox" &&
+                    <MultiTextbox id={props.id} value={props.value} style={getEditorStyle(context.response.errors)} context={context}/>}
 
-                    {props.editor!.toLowerCase() === "dropdown" && <Dropdown id={props.id} value={props.value} options={props.options} style={getEditorStyle(context.response.errors)} context={context}/>}
+                    {props.editor!.toLowerCase() === "dropdown" &&
+                    <Dropdown id={props.id} value={props.value} options={props.options} style={getEditorStyle(context.response.errors)} context={context}/>}
 
                     {/* TODO - display validation error */}
                     {getError(context.response.errors) && (
@@ -43,7 +46,7 @@ export const Field = (props: FieldProps) => {
                             <p>{getError(context.response.errors)}</p>
                         </div>
                     )}
-                </div>
+                </React.Fragment>
             )}
         </FormCtx.Consumer>
     );

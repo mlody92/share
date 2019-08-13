@@ -139,12 +139,7 @@ export class Form extends React.Component<FormProps, FormState> {
         return (
             <FormCtx.Provider value={context}>
                 <form onSubmit={this.handleSubmit} noValidate={true} className={this.props.className}>
-                    {/*<div className="container">*/}
-
                     {this.props.render()}
-
-                    {/*<div className="form-group">*/}
-
                     {this.props.submitBtnValue && (<button
                         type="submit"
                         className="btn btn-primary  btn-block"
@@ -152,7 +147,6 @@ export class Form extends React.Component<FormProps, FormState> {
                     >
                         {this.props.submitBtnValue}
                     </button>)}
-                    {/*</div>*/}
                     {submitSuccess && (
                         <div className="alert alert-info" role="alert">
                             The form was successfully submitted! {response.message}
@@ -171,7 +165,6 @@ export class Form extends React.Component<FormProps, FormState> {
                             again {response.message}
                         </div>
                     )}
-                    {/*</div>*/}
                 </form>
             </FormCtx.Provider>
         );
