@@ -3,8 +3,8 @@ import './start.css';
 import {Form} from "../../base/component/form/Form";
 import {Button} from "../../base/component/button/Button";
 import {Field} from "../../base/component/field/Field";
-import {Fields} from "../../base/component/form/Fields";
-import {isEmail, maxLength, required} from "../../base/component/form/Validator";
+import {Fields} from "../../base/component/field/types/Fields";
+import {isEmail, maxLength, required} from "../../base/component/validate/Validator";
 
 interface SignUpProps {
     forgotBtn: (e: React.MouseEvent) => void;

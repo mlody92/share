@@ -4,7 +4,7 @@
  * @param {string} fieldName - The field to validate
  * @returns {string} - The error message
  */
-import {Values} from "./Values";
+import {Values} from "../form/types/Values";
 
 export const required = (values: Values, fieldName: string): string =>
     values[fieldName] === undefined ||

@@ -1,13 +1,19 @@
 import * as React from "react";
-import {TextboxProps} from "./TextboxProps";
-import {FormContext} from "../form/FormContext";
+import {Context} from "../form/types/Context";
+import {ComponentProps} from "../ComponentProps";
+
+export interface TextboxProps extends ComponentProps {
+    type: string;
+    placeholder?: string;
+    autoFocus?: boolean;
+}
 
 export const Textbox = (props: TextboxProps) => {
-    const onChange = (context: FormContext) => (e: React.FormEvent<HTMLInputElement>) => {
+    const onChange = (context: Context) => (e: React.FormEvent<HTMLInputElement>) => {
         context.setValues({[props.id]: e.currentTarget.value})
     };
 
-    // const onBlur = (context: FormContext) => (e: React.FormEvent<HTMLInputElement>) => {
+    // const onBlur = (context: Context) => (e: React.FormEvent<HTMLInputElement>) => {
     //     context.validate(props.id)
     // };
 

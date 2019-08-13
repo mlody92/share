@@ -1,14 +1,19 @@
 import * as React from "react";
-import {DropdownProps} from "./DropdownProps";
-import {FormContext} from "../form/FormContext";
+import {Context} from "../form/types/Context";
+import {ComponentProps} from "../ComponentProps";
+
+export interface DropdownProps extends ComponentProps {
+    /* The drop down items for the field */
+    options?: Array<string>;
+}
 
 export function Dropdown(props: DropdownProps) {
 
-    const onChange = (context: FormContext) => (e: React.FormEvent<HTMLSelectElement>) => {
+    const onChange = (context: Context) => (e: React.FormEvent<HTMLSelectElement>) => {
         context.setValues({[props.id]: e.currentTarget.value})
     };
 
-    const onBlur = (context: FormContext) => (e: React.FormEvent<HTMLSelectElement>) => {
+    const onBlur = (context: Context) => (e: React.FormEvent<HTMLSelectElement>) => {
         context.validate(props.id)
     };
 

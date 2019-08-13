@@ -3,8 +3,8 @@ import './start.css';
 import {Form} from "../../base/component/form/Form";
 import {Field} from "../../base/component/field/Field";
 import {Button} from "../../base/component/button/Button";
-import {Fields} from "../../base/component/form/Fields";
-import {isEmail, maxLength, minLength, required, sameAs} from "../../base/component/form/Validator";
+import {Fields} from "../../base/component/field/types/Fields";
+import {isEmail, maxLength, minLength, required, sameAs} from "../../base/component/validate/Validator";
 
 interface SignInProps {
     backBtn: (e: React.MouseEvent) => void;

@@ -1,11 +1,11 @@
 import * as React from "react";
 import {Textbox} from "../textbox/Textbox";
 import {Dropdown} from "../dropdown/Dropdown";
-import {FieldProps} from "./FieldProps";
-import {FormContext} from "../form/FormContext";
+import {FieldProps} from "./types/FieldProps";
+import {Context} from "../form/types/Context";
 import {FormCtx} from "../form/Form";
 import {MultiTextbox} from "../textbox/MultiTextbox";
-import {Errors} from "../form/Errors";
+import {Errors} from "../error/Errors";
 
 
 export const Field = (props: FieldProps) => {
@@ -26,7 +26,7 @@ export const Field = (props: FieldProps) => {
 
     return (
         <FormCtx.Consumer>
-            {(context: FormContext) => (
+            {(context: Context) => (
                 <React.Fragment>
                     {props.label && <label htmlFor={props.id}>{props.label}</label>}
 

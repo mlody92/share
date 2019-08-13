@@ -2,17 +2,17 @@ import * as React from "react";
 import './start.css';
 import {Form} from "../../base/component/form/Form";
 import {Field} from "../../base/component/field/Field";
-import {Fields} from "../../base/component/form/Fields";
-import {isEmail, maxLength, required} from "../../base/component/form/Validator";
+import {Fields} from "../../base/component/field/types/Fields";
+import {isEmail, maxLength, required} from "../../base/component/validate/Validator";
 
-interface SignUpProps {
+interface ResetProps {
     backBtn: (e: React.MouseEvent) => void;
 }
 
-interface SignUpState {
+interface ResetState {
 }
 
-export class Reset extends React.Component <SignUpProps, SignUpState> {
+export class Reset extends React.Component <ResetProps, ResetState> {
     render() {
         const fields: Fields = {
             email: {
@@ -33,7 +33,7 @@ export class Reset extends React.Component <SignUpProps, SignUpState> {
                             <Field {...fields.email}/>
                         </React.Fragment>
                     )}
-                    submit={{className: "btn btn-primary btn-block", iconCls: "fas fa-key", value: " Reset Password"}}
+                    submit={{className: "btn btn-success btn-block", value: " Reset Password", iconCls: "fas fa-key"}}
                     finalHtml={() => (
                         <React.Fragment>
                             <a href="#" id="cancel_reset" onClick={this.props.backBtn}><i className="fas fa-angle-left"/> Back</a>

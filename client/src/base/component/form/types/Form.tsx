@@ -1,7 +1,7 @@
 import * as React from "react";
-import {Fields} from "./Fields";
+import {Fields} from "../../field/types/Fields";
 import {Values} from "./Values";
-import {Response} from "./Response";
+import {Response} from "../../../communication/Response";
 
 export interface FormProps {
     /* The http path that the form will be posted to */
@@ -12,7 +12,11 @@ export interface FormProps {
 
     /* A prop which allows content to be injected */
     fieldsHtml: () => React.ReactNode
-    submit?: { className: string, iconCls: string, value: string } | string
+    submit?: {
+        className?: string;
+        iconCls?: string;
+        value: string;
+    }
     finalHtml?: () => React.ReactNode
     className?: string;
     submitBtnValue?: string;

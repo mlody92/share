@@ -1,5 +1,5 @@
 /* The available editors for the field */
-import {Validation} from "../form/Validation";
+import {Validation} from "../../validate/Validation";
 
 type Editor = "textbox" | "multilinetextbox" | "dropdown";
 

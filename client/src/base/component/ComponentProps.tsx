@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormContext} from "./form/FormContext";
+import {Context} from "./form/types/Context";
 
 export interface ComponentProps {
     /* The unique field name */
@@ -9,5 +9,5 @@ export interface ComponentProps {
     value?: any;
 
     style?: React.CSSProperties;
-    context: FormContext;
+    context: Context;
 }

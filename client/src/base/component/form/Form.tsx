@@ -1,15 +1,15 @@
 import * as React from "react";
-import {FormProps, FormState} from "./FormPS";
-import {Response} from "./Response";
-import {Values} from "./Values";
-import {FormContext} from "./FormContext";
+import {FormProps, FormState} from "./types/Form";
+import {Response} from "../../communication/Response";
+import {Values} from "./types/Values";
+import {Context} from "./types/Context";
 import {Button} from "../button/Button";
 
 /*
  * The context which allows state and functions to be shared with Field.
  * Note that we need to pass createContext a default value which is why undefined is unioned in the type
  */
-export const FormCtx = React.createContext<FormContext | undefined>(
+export const FormCtx = React.createContext<Context | undefined>(
     undefined
 );
 
@@ -132,7 +132,7 @@ export class Form extends React.Component<FormProps, FormState> {
 
     render() {
         const {submitSuccess, response} = this.state;
-        const context: FormContext = {
+        const context: Context = {
             ...this.state,
             setValues: this.setValues,
             validate: this.validate

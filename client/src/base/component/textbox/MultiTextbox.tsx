@@ -1,13 +1,13 @@
 import * as React from "react";
-import {FormContext} from "../form/FormContext";
+import {Context} from "../form/types/Context";
 import {ComponentProps} from "../ComponentProps";
 
 export function MultiTextbox(props: ComponentProps) {
-    const onChange = (context: FormContext) => (e: React.FormEvent<HTMLTextAreaElement>) => {
+    const onChange = (context: Context) => (e: React.FormEvent<HTMLTextAreaElement>) => {
         context.setValues({[props.id]: e.currentTarget.value})
     };
 
-    const onBlur = (context: FormContext) => (e: React.FormEvent<HTMLTextAreaElement>) => {
+    const onBlur = (context: Context) => (e: React.FormEvent<HTMLTextAreaElement>) => {
         context.validate(props.id)
     };
 
