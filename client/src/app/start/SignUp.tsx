@@ -1,8 +1,8 @@
 import * as React from "react";
-import {Form} from "../base/component/form/Form";
-import {Fields} from "../base/component/form/Fields";
-import {required, isEmail, maxLength, minLength, sameAs} from "../base/component/form/Validator";
-import {Field} from "../base/component/field/Field";
+import {Form} from "../../base/component/form/Form";
+import {Fields} from "../../base/component/form/Fields";
+import {required, isEmail, maxLength, minLength, sameAs} from "../../base/component/form/Validator";
+import {Field} from "../../base/component/field/Field";
 
 interface SignInProps {
     backBtn: (e: React.MouseEvent) => void;

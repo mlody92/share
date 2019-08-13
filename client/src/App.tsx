@@ -2,7 +2,7 @@ import * as React from 'react';
 import './App.css';
 
 import logo from './logo.svg';
-import {SignIn} from "./app/SignIn";
+import {SignIn} from "./app/start/SignIn";
 
 interface User {
     id: number;

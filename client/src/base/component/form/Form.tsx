@@ -15,9 +15,6 @@ export const FormCtx = React.createContext<FormContext | undefined>(
 
 
 export class Form extends React.Component<FormProps, FormState> {
-    static defaultProps = {
-        submitBtn: "Submit"
-    } as FormProps;
 
     constructor(props: FormProps) {
         super(props);
@@ -143,38 +140,40 @@ export class Form extends React.Component<FormProps, FormState> {
         return (
             <FormCtx.Provider value={context}>
                 <form onSubmit={this.handleSubmit} noValidate={true} className={this.props.className}>
-                    <div className="container">
+                    {/*<div className="container">*/}
 
-                        {this.props.render()}
+                    {this.props.render()}
 
-                        {/*<div className="form-group">*/}
-                        <button
-                            type="submit"
-                            className="btn btn-primary  btn-block"
-                            disabled={this.haveErrors(response)}
-                        >
-                            {this.props.submitBtn}
-                        </button>
-                        {/*</div>*/}
-                        {submitSuccess && (
-                            <div className="alert alert-info" role="alert">
-                                The form was successfully submitted! {response.message}
-                            </div>
-                        )}
-                        {submitSuccess === false &&
-                        !this.haveErrors(response) && (
-                            <div className="alert alert-danger" role="alert">
-                                Sorry, an unexpected error has occurred {response.message}
-                            </div>
-                        )}
-                        {submitSuccess === false &&
-                        this.haveErrors(response) && (
-                            <div className="alert alert-danger" role="alert">
-                                Sorry, the form is invalid. Please review, adjust and try
-                                again {response.message}
-                            </div>
-                        )}
-                    </div>
+                    {/*<div className="form-group">*/}
+
+                    {this.props.submitBtnHtml && (this.props.submitBtnHtml())}
+                    {this.props.submitBtnValue && (<button
+                        type="submit"
+                        className="btn btn-primary  btn-block"
+                        disabled={this.haveErrors(response)}
+                    >
+                        {this.props.submitBtnValue}
+                    </button>)}
+                    {/*</div>*/}
+                    {submitSuccess && (
+                        <div className="alert alert-info" role="alert">
+                            The form was successfully submitted! {response.message}
+                        </div>
+                    )}
+                    {submitSuccess === false &&
+                    !this.haveErrors(response) && (
+                        <div className="alert alert-danger" role="alert">
+                            Sorry, an unexpected error has occurred {response.message}
+                        </div>
+                    )}
+                    {submitSuccess === false &&
+                    this.haveErrors(response) && (
+                        <div className="alert alert-danger" role="alert">
+                            Sorry, the form is invalid. Please review, adjust and try
+                            again {response.message}
+                        </div>
+                    )}
+                    {/*</div>*/}
                 </form>
             </FormCtx.Provider>
         );

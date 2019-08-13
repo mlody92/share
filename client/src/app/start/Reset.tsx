@@ -1,8 +1,8 @@
 import * as React from "react";
-import {Form} from "../base/component/form/Form";
-import {Fields} from "../base/component/form/Fields";
-import {isEmail, maxLength, required} from "../base/component/form/Validator";
-import {Field} from "../base/component/field/Field";
+import {Form} from "../../base/component/form/Form";
+import {Fields} from "../../base/component/form/Fields";
+import {isEmail, maxLength, required} from "../../base/component/form/Validator";
+import {Field} from "../../base/component/field/Field";
 
 interface SignUpProps {
     backBtn: (e: React.MouseEvent) => void;
@@ -23,7 +23,7 @@ export class Reset extends React.Component <SignUpProps, SignUpState> {
                     action="http://localhost:8080/api/reset"
                     fields={fields}
                     className="form-reset"
-                    submitBtn={"Reset Password"}
+                    submitBtnValue={"Reset Password"}
                     render={() => (
                         <React.Fragment>
                             <Field {...fields.email}/>

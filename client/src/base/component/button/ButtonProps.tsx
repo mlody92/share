@@ -1,7 +1,10 @@
+import * as React from "react";
+
 export interface ButtonProps {
     id?: string
-    iconCls?: string
+    type: 'submit' | 'reset' | 'button'
     className?: string
     value?: string
-
+    onClick?: (e: React.MouseEvent) => void
+    iconCls?: string
 }
