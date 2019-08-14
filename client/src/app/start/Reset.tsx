@@ -1,9 +1,9 @@
 import * as React from "react";
 import './start.css';
-import {Form} from "../../base/component/form/Form";
-import {Field} from "../../base/component/field/Field";
-import {Fields} from "../../base/component/field/types/Fields";
-import {isEmail, maxLength, required} from "../../base/component/validate/Validator";
+import {Form} from "../../_lib/component/form/Form";
+import {Field} from "../../_lib/component/field/Field";
+import {Fields} from "../../_lib/component/field/types/Fields";
+import {isEmail, maxLength, required} from "../../_lib/component/validate/Validator";
 
 interface ResetProps {
     backBtn: (e: React.MouseEvent) => void;
