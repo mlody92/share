@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -46,6 +47,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
             String[] path = constraintViolation.getPropertyPath().toString().split("\\.");
             errorResponse.addErrorField(path[path.length - 1], constraintViolation.getMessage());
         }
+        errorResponse.setErrors2(new ArrayList<>(errorResponse.getErrors()));
         return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
     }
 

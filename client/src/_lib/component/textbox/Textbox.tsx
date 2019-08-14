@@ -6,6 +6,7 @@ export interface TextboxProps extends ComponentProps {
     type: string;
     placeholder?: string;
     autoFocus?: boolean;
+    className: string
 }
 
 export const Textbox = (props: TextboxProps) => {
@@ -13,9 +14,9 @@ export const Textbox = (props: TextboxProps) => {
         context.setValues({[props.id]: e.currentTarget.value})
     };
 
-    // const onBlur = (context: Context) => (e: React.FormEvent<HTMLInputElement>) => {
-    //     context.validate(props.id)
-    // };
+    const onBlur = (context: Context) => (e: React.FormEvent<HTMLInputElement>) => {
+        context.validate(props.id)
+    };
 
     return (
         <input
@@ -23,8 +24,8 @@ export const Textbox = (props: TextboxProps) => {
             type={props.type}
             value={props.value}
             onChange={onChange(props.context)}
-            // onBlur={onBlur(props.context)}
-            className="form-control"
+            onBlur={onBlur(props.context)}
+            className={props.className}
             style={props.style}
             placeholder={props.placeholder}
             autoFocus={props.autoFocus}
@@ -33,6 +34,7 @@ export const Textbox = (props: TextboxProps) => {
 };
 
 Textbox.defaultProps = {
-    type: "textbox"
+    type: "textbox",
+    className: "form-control"
 };
 

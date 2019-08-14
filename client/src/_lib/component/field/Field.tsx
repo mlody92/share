@@ -31,7 +31,7 @@ export const Field = (props: FieldProps) => {
                     {props.label && <label htmlFor={props.id}>{props.label}</label>}
 
                     {props.editor!.toLowerCase() === "textbox" &&
-                    <Textbox id={props.id} value={props.value} style={getEditorStyle(context.response.errors)} context={context} type={props.type}
+                    <Textbox id={props.id} value={props.value} className={props.className} style={getEditorStyle(context.response.errors)} context={context} type={props.type}
                              placeholder={props.placeholder} autoFocus={props.autoFocus}/>}
 
                     {props.editor!.toLowerCase() === "multilinetextbox" &&

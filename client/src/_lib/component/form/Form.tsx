@@ -1,6 +1,7 @@
 import * as React from "react";
 import {FormProps, FormState} from "./types/Form";
 import {Response} from "../../communication/Response";
+import {Communication} from "../../communication/Communication";
 import {Values} from "./types/Values";
 import {Context} from "./types/Context";
 import {Button} from "../button/Button";
@@ -20,7 +21,8 @@ export class Form extends React.Component<FormProps, FormState> {
         super(props);
         this.state = {
             values: {},
-            response: {errors: {}}
+            response: {errors: {}},
+            isLoading: false
         };
     }
 
@@ -66,12 +68,8 @@ export class Form extends React.Component<FormProps, FormState> {
      * Handles form submission
      * @param {React.FormEvent<HTMLFormElement>} e - The form event
      */
-    private handleSubmit = async (
-        e: React.FormEvent<HTMLFormElement>
-    ): Promise<void> => {
+    private handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-
-
         if (this.validateForm()) {
             const submitSuccess: boolean = await this.submitForm();
             this.setState({submitSuccess});
@@ -97,14 +95,10 @@ export class Form extends React.Component<FormProps, FormState> {
      */
     private async submitForm(): Promise<boolean> {
         try {
-            const responseServer = await fetch(this.props.action, {
-                method: "post",
-                headers: new Headers({
-                    "Content-Type": "application/json",
-                    Accept: "application/json"
-                }),
-                body: JSON.stringify(this.state.values)
-            });
+            this.setState({isLoading: true});
+
+            const responseServer = await Communication.executePostAsJson(this.props.action, this.state.values);
+
             if (responseServer.status === 400) {
                 /* Map the validation errors to Map */
                 let responseBody: any;
@@ -114,11 +108,13 @@ export class Form extends React.Component<FormProps, FormState> {
                     const fieldName = obj.field.toLowerCase();
                     response.errors[fieldName] = obj.message;
                 });
-                this.setState({response});
+                     this.setState({response});
             }
             return responseServer.ok;
         } catch (ex) {
             return false;
+        } finally {
+            this.setState({isLoading: false});
         }
     }
 
@@ -129,6 +125,10 @@ export class Form extends React.Component<FormProps, FormState> {
     private setValues = (values: Values) => {
         this.setState({values: {...this.state.values, ...values}});
     };
+
+    private createIconCls() {
+        return this.state.isLoading ? "spinner-border spinner-border-sm" : this.props.submit!.iconCls;
+    }
 
     render() {
         const {submitSuccess, response} = this.state;
@@ -143,10 +143,8 @@ export class Form extends React.Component<FormProps, FormState> {
                     {this.props.fieldsHtml()}
                     {/*submit*/}
                     {typeof this.props.submit === "object" &&
-                    <Button type="submit" className={this.props.submit.className} disabled={this.haveErrors(response)} iconCls={this.props.submit.iconCls}
+                    <Button type="submit" className={this.props.submit.className} disabled={this.haveErrors(response)} iconCls={this.createIconCls()}
                             value={this.props.submit.value}/>}
-                    {typeof this.props.submit === "string" &&
-                    <Button type="submit" className="btn btn-primary btn-block" disabled={this.haveErrors(response)} value={this.props.submit}/>}
 
                     {/*submit info*/}
                     {submitSuccess && (

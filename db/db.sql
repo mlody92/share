@@ -4,7 +4,7 @@ CREATE TABLE public.user
   email         character varying(40) NOT NULL,
   password      character varying(36) NOT NULL, --md5 32 + 4 salt
   name          character varying(20) NOT NULL,
-  surname       character varying(30) NOT NULL,
+  surname       character varying(30),
   date_create   timestamp without time zone,
   date_remove   timestamp without time zone,
   permission_id integer               NOT NULL DEFAULT 1,

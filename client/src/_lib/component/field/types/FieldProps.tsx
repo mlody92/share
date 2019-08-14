@@ -23,4 +23,5 @@ export interface FieldProps {
     type?: string;
     placeholder?:string;
     autoFocus?: boolean
+    className?:string
 }

@@ -31,5 +31,6 @@ export interface FormState {
 
     /* Whether the form has been successfully submitted */
     submitSuccess?: boolean;
+    isLoading:boolean;
 }
 
