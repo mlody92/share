@@ -2,6 +2,7 @@ import * as React from "react";
 import {FormProps, FormState} from "./types/Form";
 import {Response} from "../../communication/Response";
 import {Communication} from "../../communication/Communication";
+import {Arrays} from "../../array/Arrays";
 import {Values} from "./types/Values";
 import {Context} from "./types/Context";
 import {Button} from "../button/Button";
@@ -33,47 +34,34 @@ export class Form extends React.Component<FormProps, FormState> {
      * @returns {string} - The error message
      */
     private validate = (fieldName: string): Errors | null => {
-        const newError: Errors = {field: fieldName, message: ""};
-        let errors = this.state.response.errors!;
+        let newError: Errors | null = null;
 
         if (this.props.formFields[fieldName] && this.props.formFields[fieldName].validation) {
             this.props.formFields[fieldName].validation!.some((value => {
                 // todo czy wyświetlać wszystkie błędy walidacji?
-                newError.message = value.rule(this.state.values, fieldName, value.args);
-                return newError.message;
+                const message = value.rule(this.state.values, fieldName, value.args);
+                if (message) {
+                    newError = {field: fieldName, message};
+                }
+                return message;
             }));
         }
 
+        let errors = this.state.response.errors!;
         const errExist = this.state.response.errors!.find(obj => obj.field === fieldName);
-        if (newError.message) {
-            if(errExist){
-                errExist.message=newError.message;
-            } else {
-                errors = [...this.state.response.errors!, newError];
-            }
-            console.log("errors1");
-            console.log(errors);
-            this.setState({
-                response: {
-                    success: false,
-                    errors
-                }
-            });
-            return newError;
+        Arrays.removeFirst(errors, errExist);
+
+        if (newError) {
+            errors = [...errors, newError];
         }
-        if(errExist){
-            const idx = errors.indexOf(errExist);
-            if(idx!==-1){
-                errors.splice(idx,1);
-            }
-        }
+
         this.setState({
             response: {
-                success: false,
+                success: errors === undefined || errors.length === 0,
                 errors
             }
         });
-        return null;
+        return newError;
     };
 
     /**
@@ -81,7 +69,6 @@ export class Form extends React.Component<FormProps, FormState> {
      * @param {Response} response
      */
     private haveErrors(response: Response) {
-        console.log("haveErrors");
         return response.errors ? response.errors!.length > 0 : false;
     }
 
@@ -102,7 +89,6 @@ export class Form extends React.Component<FormProps, FormState> {
      * @returns {boolean} - Whether the form is valid or not
      */
     private validateForm(): boolean {
-        console.log("validateForm");
         const response: Response = {success: true, errors: []};
         Object.keys(this.props.formFields).map((fieldName: string) => {
             const items = this.validate(fieldName);

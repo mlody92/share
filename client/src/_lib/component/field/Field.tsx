@@ -17,9 +17,7 @@ export const Field = (props: FieldProps) => {
      */
     const getError = (errors: Array<Errors>): string => {
         if (errors && errors.length > 0) {
-            console.log(errors);
             const error = errors.find(obj => obj.field === props.id);
-            console.log(error);
             return error ? error.message : "";
         }
         return "";
