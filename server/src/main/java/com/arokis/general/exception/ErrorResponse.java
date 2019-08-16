@@ -7,7 +7,6 @@ public class ErrorResponse {
     private boolean success;
     private String message;
     private Collection<Error> errors = new ArrayList<>();
-    private Collection<Error> errors2 =  new ArrayList<>();
 
     public boolean isSuccess() {
         return success;
@@ -38,15 +37,6 @@ public class ErrorResponse {
             errors = new ArrayList<>();
         }
         errors.add(Error.create(path, msg));
-    }
-
-    public void setErrors2(Collection<Error> errors2) {
-        this.errors2 = errors2;
-    }
-
-
-    public Collection<Error> getErrors2() {
-        return errors2;
     }
 
     static class Error {

@@ -15,13 +15,21 @@ export const Field = (props: FieldProps) => {
      * @param {IErrors} errors - All the errors from the form
      * @returns {string[]} - The validation error
      */
-    const getError = (errors: Errors): string => (errors ? errors[props.id] : "");
+    const getError = (errors: Array<Errors>): string => {
+        if (errors && errors.length > 0) {
+            console.log(errors);
+            const error = errors.find(obj => obj.field === props.id);
+            console.log(error);
+            return error ? error.message : "";
+        }
+        return "";
+    };
 
     /** Gets the inline styles for editor
      * @param {IErrors} errors - All the errors from the form
      * @returns {any} - The style object
      */
-    const getEditorStyle = (errors: Errors): any =>
+    const getEditorStyle = (errors: Array<Errors>): any =>
         getError(errors) ? {borderColor: "red"} : {};
 
     return (
@@ -31,19 +39,20 @@ export const Field = (props: FieldProps) => {
                     {props.label && <label htmlFor={props.id}>{props.label}</label>}
 
                     {props.editor!.toLowerCase() === "textbox" &&
-                    <Textbox id={props.id} value={props.value} className={props.className} style={getEditorStyle(context.response.errors)} context={context} type={props.type}
+                    <Textbox id={props.id} value={props.value} className={props.className} style={getEditorStyle(context.response.errors!)} context={context}
+                             type={props.type}
                              placeholder={props.placeholder} autoFocus={props.autoFocus}/>}
 
                     {props.editor!.toLowerCase() === "multilinetextbox" &&
-                    <MultiTextbox id={props.id} value={props.value} style={getEditorStyle(context.response.errors)} context={context}/>}
+                    <MultiTextbox id={props.id} value={props.value} style={getEditorStyle(context.response.errors!)} context={context}/>}
 
                     {props.editor!.toLowerCase() === "dropdown" &&
-                    <Dropdown id={props.id} value={props.value} options={props.options} style={getEditorStyle(context.response.errors)} context={context}/>}
+                    <Dropdown id={props.id} value={props.value} options={props.options} style={getEditorStyle(context.response.errors!)} context={context}/>}
 
                     {/* TODO - display validation error */}
-                    {getError(context.response.errors) && (
+                    {getError(context.response.errors!) && (
                         <div style={{color: "red", fontSize: "80%"}}>
-                            <p>{getError(context.response.errors)}</p>
+                            <p>{getError(context.response.errors!)}</p>
                         </div>
                     )}
                 </React.Fragment>

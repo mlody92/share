@@ -10,21 +10,7 @@ export class Communication {
             }),
             body: JSON.stringify(values)
         });
-        if (responseServer.status === 400) {
-            let responseBody: any;
-            responseBody = await responseServer.json();
-            console.log(responseBody);
-            const response: Response = {message: responseBody.message, errors: {}};
-            responseBody.errors.forEach((obj: any) => {
-                const fieldName = obj.field.toLowerCase();
-                response.errors[fieldName] = obj.message;
-            });
-            console.log(response);
-            responseBody.errors2 = responseBody.error;
-            console.log(responseBody as Response);
-
-        }
-        return responseServer;
+        return await responseServer.json() as Response;
     }
 }
 

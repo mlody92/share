@@ -5,6 +5,7 @@ import {Communication} from "../../communication/Communication";
 import {Values} from "./types/Values";
 import {Context} from "./types/Context";
 import {Button} from "../button/Button";
+import {Errors} from "../error/Errors";
 
 /*
  * The context which allows state and functions to be shared with Field.
@@ -21,7 +22,7 @@ export class Form extends React.Component<FormProps, FormState> {
         super(props);
         this.state = {
             values: {},
-            response: {errors: {}},
+            response: {success: true, errors: []},
             isLoading: false
         };
     }
@@ -31,23 +32,48 @@ export class Form extends React.Component<FormProps, FormState> {
      * @param {string} fieldName - The field to validate
      * @returns {string} - The error message
      */
-    private validate = (fieldName: string): string => {
-        let newError: string = "";
+    private validate = (fieldName: string): Errors | null => {
+        const newError: Errors = {field: fieldName, message: ""};
+        let errors = this.state.response.errors!;
 
         if (this.props.formFields[fieldName] && this.props.formFields[fieldName].validation) {
             this.props.formFields[fieldName].validation!.some((value => {
                 // todo czy wyświetlać wszystkie błędy walidacji?
-                newError = value.rule(this.state.values, fieldName, value.args);
-                return newError;
+                newError.message = value.rule(this.state.values, fieldName, value.args);
+                return newError.message;
             }));
         }
-        this.state.response.errors[fieldName] = newError;
+
+        const errExist = this.state.response.errors!.find(obj => obj.field === fieldName);
+        if (newError.message) {
+            if(errExist){
+                errExist.message=newError.message;
+            } else {
+                errors = [...this.state.response.errors!, newError];
+            }
+            console.log("errors1");
+            console.log(errors);
+            this.setState({
+                response: {
+                    success: false,
+                    errors
+                }
+            });
+            return newError;
+        }
+        if(errExist){
+            const idx = errors.indexOf(errExist);
+            if(idx!==-1){
+                errors.splice(idx,1);
+            }
+        }
         this.setState({
             response: {
-                errors: {...this.state.response.errors, [fieldName]: newError}
+                success: false,
+                errors
             }
         });
-        return newError;
+        return null;
     };
 
     /**
@@ -55,13 +81,8 @@ export class Form extends React.Component<FormProps, FormState> {
      * @param {Response} response
      */
     private haveErrors(response: Response) {
-        let haveError: boolean = false;
-        Object.keys(response.errors).map((key: string) => {
-            if (response.errors[key].length > 0) {
-                haveError = true;
-            }
-        });
-        return haveError;
+        console.log("haveErrors");
+        return response.errors ? response.errors!.length > 0 : false;
     }
 
     /**
@@ -81,9 +102,13 @@ export class Form extends React.Component<FormProps, FormState> {
      * @returns {boolean} - Whether the form is valid or not
      */
     private validateForm(): boolean {
-        const response: Response = {errors: {}};
+        console.log("validateForm");
+        const response: Response = {success: true, errors: []};
         Object.keys(this.props.formFields).map((fieldName: string) => {
-            response.errors[fieldName] = this.validate(fieldName);
+            const items = this.validate(fieldName);
+            if (items !== null) {
+                response.errors!.push(items);
+            }
         });
         this.setState({response});
         return !this.haveErrors(response);
@@ -96,21 +121,9 @@ export class Form extends React.Component<FormProps, FormState> {
     private async submitForm(): Promise<boolean> {
         try {
             this.setState({isLoading: true});
-
             const responseServer = await Communication.executePostAsJson(this.props.action, this.state.values);
-
-            if (responseServer.status === 400) {
-                /* Map the validation errors to Map */
-                let responseBody: any;
-                responseBody = await responseServer.json();
-                const response: Response = {message: responseBody.message, errors: {}};
-                responseBody.errors.forEach((obj: any) => {
-                    const fieldName = obj.field.toLowerCase();
-                    response.errors[fieldName] = obj.message;
-                });
-                     this.setState({response});
-            }
-            return responseServer.ok;
+            this.setState({response: responseServer});
+            return responseServer.success;
         } catch (ex) {
             return false;
         } finally {
