@@ -38,7 +38,6 @@ export class Form extends React.Component<FormProps, FormState> {
 
         if (this.props.formFields[fieldName] && this.props.formFields[fieldName].validation) {
             this.props.formFields[fieldName].validation!.some((value => {
-                // todo czy wyświetlać wszystkie błędy walidacji?
                 const message = value.rule(this.state.values, fieldName, value.args);
                 if (message) {
                     newError = {field: fieldName, message};
@@ -48,7 +47,7 @@ export class Form extends React.Component<FormProps, FormState> {
         }
 
         let errors = this.state.response.errors!;
-        const errExist = this.state.response.errors!.find(obj => obj.field === fieldName);
+        const errExist = (errors && errors.find(obj => obj.field === fieldName));
         Arrays.removeFirst(errors, errExist);
 
         if (newError) {
