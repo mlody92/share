@@ -1,6 +1,6 @@
 export class Arrays {
     static removeFirst<T>(array: Array<T>, value: T) {
-        if (array.length === 0) {
+        if (array === undefined) {
             return;
         }
         const idx = array.indexOf(value);

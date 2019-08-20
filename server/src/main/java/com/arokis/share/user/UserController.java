@@ -2,6 +2,7 @@ package com.arokis.share.user;
 
 import com.arokis.general.controller.UpdateBaseController;
 import com.arokis.general.exception.OperationException;
+import com.arokis.general.json.ResponseJson;
 import com.arokis.share.user.model.User;
 import com.arokis.share.user.repo.UserDao;
 import com.arokis.share.user.repo.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -43,11 +45,12 @@ public class UserController extends UpdateBaseController<User> {
     }
 
     @RequestMapping(value = "/user/signin", method = RequestMethod.POST)
-    public ResponseEntity signin(@Valid @RequestBody User user, Errors errors) throws OperationException {
-        if (!getUserDao().isEmailAvailable(user.getEmail())) {
-            throw new OperationException("Podany e-mail jest już zajęty.");
+    public ResponseEntity signin(@RequestBody User user, Errors errors) throws OperationException {
+        boolean logged = getUserDao().login(user.getEmail(), user.getPassword());
+        if (!logged) {
+            throw new OperationException("Brak podanego użytkownika.");
         }
-        return super.save(user, errors);
+        return new ResponseEntity<String>(ResponseJson.success("Operacja logowania przebiegła pomyślnie."), HttpStatus.OK);
     }
 
     @Override

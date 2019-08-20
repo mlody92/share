@@ -33,7 +33,7 @@ public class UserDao extends EntityQuery {
                 getCb().isNull(root.get(User_.dateRemove))
         );
         TypedQuery<User> typedQuery = getEm().createQuery(query);
-        return typedQuery.getResultList().isEmpty();
+        return !typedQuery.getResultList().isEmpty();
     }
 
 
