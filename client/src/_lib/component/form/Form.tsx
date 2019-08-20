@@ -124,7 +124,7 @@ export class Form extends React.Component<FormProps, FormState> {
         this.setState({values: {...this.state.values, ...values}});
     };
 
-    private createIconCls() {
+    private loadingCls() {
         return this.state.isLoading ? "spinner-border spinner-border-sm" : this.props.submit!.iconCls;
     }
 
@@ -141,7 +141,7 @@ export class Form extends React.Component<FormProps, FormState> {
                     {this.props.fieldsHtml()}
                     {/*submit*/}
                     {typeof this.props.submit === "object" &&
-                    <Button type="submit" className={this.props.submit.className} disabled={this.haveErrors(response)} iconCls={this.createIconCls()}
+                    <Button type="submit" className={this.props.submit.className} disabled={this.haveErrors(response)} iconCls={this.loadingCls()}
                             value={this.props.submit.value}/>}
 
                     {/*submit info*/}

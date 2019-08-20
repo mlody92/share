@@ -1,51 +1,64 @@
 package com.arokis.share.user;
 
-import com.arokis.general.json.ResponseJson;
+import com.arokis.general.controller.UpdateBaseController;
+import com.arokis.general.exception.OperationException;
 import com.arokis.share.user.model.User;
+import com.arokis.share.user.repo.UserDao;
 import com.arokis.share.user.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
+import java.util.List;
 
-@Controller
-public class UserController {
+@Validated
+@RestController
+public class UserController extends UpdateBaseController<User> {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserDao userDao;
 
-    @GetMapping("/user/add")
-    public String addUser() {
-        return "/user/add";
+    @Autowired
+    private UserRepository repository;
+
+    @GetMapping("/users")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<User> getAllUser(Pageable pageable) {
+        Page<User> all = repository.findAll(pageable);
+        return all.getContent();
     }
 
-    @RequestMapping(value = "/user/save", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute("user") User user) {
-        user.setDateCreate(LocalDateTime.now());
-        user.setConfirm(false);
-        user.setEmail("test@test");
-        user.setName("name");
-        user.setSurname("surname");
-        user.setPassword("pp");
-        user.setPermission_id(1);
-//        userRepository.save(user);
-        return "redirect:/users";
-    }
-
-    @RequestMapping(value = "/user/save2", method = RequestMethod.POST)
-    public String saveUser2(@Valid UserForm form, BindingResult bindingResult, Model model) {
-        System.out.println(form.getEmail());
-        if (bindingResult.hasErrors()) {
-            bindingResult.getAllErrors().forEach(System.out::println);
-            return "/user/add";
+    @RequestMapping(value = "/user/signup", method = RequestMethod.POST)
+    public ResponseEntity signup(@Valid @RequestBody User user, Errors errors) throws OperationException {
+        if (!getUserDao().isEmailAvailable(user.getEmail())) {
+            throw new OperationException("Podany e-mail jest już zajęty.");
         }
-        return "redirect:/users";
+        return super.save(user, errors);
+    }
+
+    @RequestMapping(value = "/user/signin", method = RequestMethod.POST)
+    public ResponseEntity signin(@Valid @RequestBody User user, Errors errors) throws OperationException {
+        if (!getUserDao().isEmailAvailable(user.getEmail())) {
+            throw new OperationException("Podany e-mail jest już zajęty.");
+        }
+        return super.save(user, errors);
+    }
+
+    @Override
+    protected JpaRepository getRepository() {
+        return repository;
+    }
+
+    UserDao getUserDao() {
+        if (userDao == null) {
+            userDao = new UserDao();
+        }
+        return userDao;
     }
 }

@@ -30,7 +30,6 @@ public class User implements Serializable {
     @Size(max = 20)
     private String name;
 
-    @NotNull
     @Size(max = 30)
     private String surname;
 

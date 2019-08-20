@@ -24,5 +24,17 @@ public class UserDao extends EntityQuery {
         return typedQuery.getResultList().isEmpty();
     }
 
+    public boolean login(String email, String password) {
+        CriteriaQuery<User> query = getCb().createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root).where(
+                getCb().equal(root.get(User_.email), email),
+                getCb().equal(root.get(User_.password), password),
+                getCb().isNull(root.get(User_.dateRemove))
+        );
+        TypedQuery<User> typedQuery = getEm().createQuery(query);
+        return typedQuery.getResultList().isEmpty();
+    }
+
 
 }
