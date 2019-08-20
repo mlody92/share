@@ -12,10 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -41,14 +44,19 @@ public class UserController extends UpdateBaseController<User> {
         if (!getUserDao().isEmailAvailable(user.getEmail())) {
             throw new OperationException("Podany e-mail jest już zajęty.");
         }
+
+        //todo potwierdzenie hasła walidacja po stronie serwera
         return super.save(user, errors);
     }
 
     @RequestMapping(value = "/user/signin", method = RequestMethod.POST)
-    public ResponseEntity signin(@RequestBody User user, Errors errors) throws OperationException {
-        boolean logged = getUserDao().login(user.getEmail(), user.getPassword());
-        if (!logged) {
+    public ResponseEntity signin(@RequestBody User user, HttpSession session) throws OperationException {
+        User logged = getUserDao().get(user.getEmail());
+        if (logged == null) {
             throw new OperationException("Brak podanego użytkownika.");
+        }
+        if (!logged.getPassword().equals(user.getPassword())) {
+            throw new OperationException("Nieprawidłowe hasło użytkownika.");
         }
         return new ResponseEntity<String>(ResponseJson.success("Operacja logowania przebiegła pomyślnie."), HttpStatus.OK);
     }

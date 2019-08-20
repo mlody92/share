@@ -1,5 +1,6 @@
 package com.arokis.share.user.model;
 
+import com.arokis.general.vaildator.ValidEmail;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import net.bytebuddy.implementation.bind.annotation.Default;
@@ -17,6 +18,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ValidEmail
     @NotNull
     @Size(max = 40)
     @Column(unique = true)
