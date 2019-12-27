@@ -23,7 +23,7 @@ public abstract class CrudBaseController<T> {
         return new ResponseEntity<String>(ResponseJson.success("Operacja zapisu przebiegła pomyślnie."), HttpStatus.OK);
     }
 
-    public ResponseEntity insert(T obj, Errors errors) {
+    protected ResponseEntity insert(T obj, Errors errors) {
         try {
             getInsert().checkAddConditions(obj);
             getInsert().beforeInsert(obj);
@@ -35,13 +35,43 @@ public abstract class CrudBaseController<T> {
         return new ResponseEntity<String>(ResponseJson.success("Operacja zapisu przebiegła pomyślnie."), HttpStatus.OK);
     }
 
+    protected ResponseEntity remove(T obj, Errors errors) {
+        try {
+            getRemove().checkRemoveConditions(obj);
+            getRemove().beforeRemove(obj);
+//            getRepository().delete(obj);
+        } catch (OperationException ex) {
+            return new ResponseEntity<String>(ResponseJson.failure(ex.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<String>(ResponseJson.success("Operacja zapisu przebiegła pomyślnie."), HttpStatus.OK);
+    }
+
     protected abstract JpaRepository getRepository();
 
-    public UpdateBase<T> getUpdate() throws OperationException {
-        throw new NotImplementedException("Niezaimplementowano metody getUpdate");
+    private UpdateBase<T> getUpdate() throws OperationException {
+        if (getBaseModel() instanceof UpdateBase) {
+            return (UpdateBase<T>) getBaseModel();
+        }
+        throw new NotImplementedException("Metoda getBaseModel nie jest instancją UpdateBase");
     }
 
-    public InsertBase<T> getInsert() throws OperationException {
-        throw new NotImplementedException("Niezaimplementowano metody getInsert");
+    private InsertBase<T> getInsert() throws OperationException {
+        if (getBaseModel() instanceof InsertBase) {
+            return (InsertBase<T>) getBaseModel();
+        }
+        throw new NotImplementedException("Metoda getBaseModel nie jest instancją InsertBase");
     }
+
+    private RemoveBase<T> getRemove() throws OperationException {
+        if (getBaseModel() instanceof RemoveBase) {
+            return (RemoveBase<T>) getBaseModel();
+        }
+        throw new NotImplementedException("Metoda getBaseModel nie jest instancją RemoveBase");
+    }
+
+    protected BaseModel<T> getBaseModel() throws OperationException {
+        throw new NotImplementedException("Niezaimplementowano metody getBaseModel");
+    }
+
+
 }

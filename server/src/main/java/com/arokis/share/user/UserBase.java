@@ -1,6 +1,7 @@
 package com.arokis.share.user;
 
 import com.arokis.general.controller.InsertBase;
+import com.arokis.general.controller.RemoveBase;
 import com.arokis.general.controller.UpdateBase;
 import com.arokis.general.exception.OperationException;
 import com.arokis.share.user.model.User;
@@ -14,7 +15,6 @@ public class UserBase implements InsertBase<User>, UpdateBase<User> {
 
     @Autowired
     private UserDao userDao;
-
 
     @Override
     public void checkAddConditions(User user) throws OperationException {
