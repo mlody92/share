@@ -3,6 +3,8 @@ package com.arokis.share.user.repo;
 import com.arokis.general.entity.EntityQuery;
 import com.arokis.share.user.model.User;
 import com.arokis.share.user.model.User_;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -11,7 +13,6 @@ import javax.persistence.criteria.Root;
 
 @Repository
 public class UserDao extends EntityQuery {
-
 
     public boolean isEmailAvailable(String email) {
         CriteriaQuery<User> query = getCb().createQuery(User.class);

@@ -1,6 +1,6 @@
 package com.arokis.share.user;
 
-import com.arokis.general.controller.UpdateBaseController;
+import com.arokis.general.controller.CrudBaseController;
 import com.arokis.general.exception.OperationException;
 import com.arokis.general.json.ResponseJson;
 import com.arokis.share.user.model.User;
@@ -12,19 +12,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
 @Validated
 @RestController
-public class UserController extends UpdateBaseController<User> {
+public class UserController extends CrudBaseController<User> {
+
+    @Resource
+    private UserBase insert;
 
     @Autowired
     private UserDao userDao;
@@ -41,12 +43,8 @@ public class UserController extends UpdateBaseController<User> {
 
     @RequestMapping(value = "/user/signup", method = RequestMethod.POST)
     public ResponseEntity signup(@Valid @RequestBody User user, Errors errors) throws OperationException {
-        if (!getUserDao().isEmailAvailable(user.getEmail())) {
-            throw new OperationException("Podany e-mail jest już zajęty.");
-        }
-
         //todo potwierdzenie hasła walidacja po stronie serwera
-        return super.save(user, errors);
+        return insert(user, errors);
     }
 
     @RequestMapping(value = "/user/signin", method = RequestMethod.POST)
@@ -66,10 +64,28 @@ public class UserController extends UpdateBaseController<User> {
         return repository;
     }
 
+    //    todo scalić insert/update
+    @Override
+    public UserBase getInsert() {
+        if (insert == null) {
+            insert = new UserBase();
+        }
+        return insert;
+    }
+
+    @Override
+    public UserBase getUpdate() {
+        if (insert == null) {
+            insert = new UserBase();
+        }
+        return insert;
+    }
+
     UserDao getUserDao() {
         if (userDao == null) {
             userDao = new UserDao();
         }
         return userDao;
     }
+
 }
