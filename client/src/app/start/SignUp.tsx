@@ -43,7 +43,7 @@ export class SignUp extends React.Component <SignInProps, SignInState> {
         return (
             <div id="logreg-forms">
                 <Form
-                    action="http://localhost:8080/user/signup"
+                    action="http://localhost:8080/user/insert"
                     formFields={fields}
                     className="form-signup"
                     fieldsHtml={() => (

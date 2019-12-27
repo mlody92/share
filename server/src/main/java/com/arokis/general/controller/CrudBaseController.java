@@ -8,6 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 @Component
 public abstract class CrudBaseController<T> {
@@ -23,7 +28,8 @@ public abstract class CrudBaseController<T> {
         return new ResponseEntity<String>(ResponseJson.success("Operacja zapisu przebiegła pomyślnie."), HttpStatus.OK);
     }
 
-    protected ResponseEntity insert(T obj, Errors errors) {
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    protected ResponseEntity insert(@Valid @RequestBody T obj, Errors errors) {
         try {
             getInsert().checkAddConditions(obj);
             getInsert().beforeInsert(obj);
