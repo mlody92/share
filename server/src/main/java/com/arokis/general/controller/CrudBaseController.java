@@ -17,6 +17,7 @@ import javax.validation.Valid;
 @Component
 public abstract class CrudBaseController<T> {
 
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity save(T obj, Errors errors) {
         try {
             getUpdate().checkUpdateConditions(obj);
@@ -38,9 +39,10 @@ public abstract class CrudBaseController<T> {
         } catch (OperationException ex) {
             return new ResponseEntity<String>(ResponseJson.failure(ex.getMessage()), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<String>(ResponseJson.success("Operacja zapisu przebiegła pomyślnie."), HttpStatus.OK);
+        return new ResponseEntity<String>(ResponseJson.success("Operacja dodania przebiegła pomyślnie."), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/remove", method = RequestMethod.POST)
     protected ResponseEntity remove(T obj, Errors errors) {
         try {
             getRemove().checkRemoveConditions(obj);
@@ -49,7 +51,7 @@ public abstract class CrudBaseController<T> {
         } catch (OperationException ex) {
             return new ResponseEntity<String>(ResponseJson.failure(ex.getMessage()), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<String>(ResponseJson.success("Operacja zapisu przebiegła pomyślnie."), HttpStatus.OK);
+        return new ResponseEntity<String>(ResponseJson.success("Operacja usunięcia przebiegła pomyślnie."), HttpStatus.OK);
     }
 
     protected abstract JpaRepository getRepository();
