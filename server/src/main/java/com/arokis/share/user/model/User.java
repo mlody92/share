@@ -28,6 +28,9 @@ public class User implements Serializable {
     @Size(max = 32)
     private String password;
 
+    @Transient
+    private String passwordConfirm;
+
     @NotNull
     @Size(max = 20)
     private String name;
@@ -40,9 +43,6 @@ public class User implements Serializable {
 
     @Column(name = "date_remove")
     private LocalDateTime dateRemove;
-
-    @NotNull
-    private int permission_id = 1;
 
     @NotNull
     private Boolean confirm = false;
@@ -72,6 +72,14 @@ public class User implements Serializable {
     @JsonProperty
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     public String getName() {
@@ -104,14 +112,6 @@ public class User implements Serializable {
 
     public void setDateRemove(LocalDateTime dateRemove) {
         this.dateRemove = dateRemove;
-    }
-
-    public int getPermission_id() {
-        return permission_id;
-    }
-
-    public void setPermission_id(int permission_id) {
-        this.permission_id = permission_id;
     }
 
     public Boolean getConfirm() {
