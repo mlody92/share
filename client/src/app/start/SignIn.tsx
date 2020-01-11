@@ -1,10 +1,10 @@
 import * as React from "react";
 import './start.css';
-import {Form} from "../../_lib/component/form/Form";
-import {Button} from "../../_lib/component/button/Button";
-import {Field} from "../../_lib/component/field/Field";
-import {Fields} from "../../_lib/component/field/types/Fields";
-import {isEmail, maxLength, required} from "../../_lib/component/validate/Validator";
+import {Form} from "lib/component/form/Form";
+import {Button} from 'lib/component/button';
+import {Field} from "lib/component/field/Field";
+import {Fields} from "lib/component/field/types/Fields";
+import {isEmail, maxLength, required} from "lib/component/validate/Validator";
 
 interface SignUpProps {
     forgotBtn: (e: React.MouseEvent) => void;
