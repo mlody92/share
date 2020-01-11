@@ -4,15 +4,14 @@ import './App.css';
 import logo from './logo.svg';
 import {Login} from "./app/start/Login";
 
-interface User {
+type User = {
     id: number;
     email: string;
 }
 
-interface AppProps {
-}
+type AppProps = {}
 
-interface AppState {
+type AppState = {
     users: Array<User>;
     isLoading: boolean;
 }
@@ -38,7 +37,6 @@ class App extends React.Component<AppProps, AppState> {
 
     render() {
         return (
-
             <div className="App">
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
