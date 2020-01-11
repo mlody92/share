@@ -21,6 +21,7 @@ public class UserBase implements InsertBase<User>, UpdateBase<User> {
         if (getUserDao().get(user.getEmail()) != null) {
             throw new OperationException("Podany e-mail jest już zajęty.");
         }
+        //todo weryfikacja haseł
     }
 
     @Override

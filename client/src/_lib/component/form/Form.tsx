@@ -106,7 +106,8 @@ export class Form extends React.Component<FormProps, FormState> {
     private async submitForm(): Promise<boolean> {
         try {
             this.setState({isLoading: true});
-            const responseServer = await Communication.executePostAsJson(this.props.action, this.state.values);
+
+            const responseServer = await Communication.executePostAsJson<Response>(this.props.action, this.state.values);
             this.setState({response: responseServer});
             return responseServer.success;
         } catch (ex) {

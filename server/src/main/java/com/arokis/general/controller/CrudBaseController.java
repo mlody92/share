@@ -3,6 +3,7 @@ package com.arokis.general.controller;
 import com.arokis.general.exception.NotImplementedException;
 import com.arokis.general.exception.OperationException;
 import com.arokis.general.json.ResponseJson;
+import com.arokis.share.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ public abstract class CrudBaseController<T> {
             getInsert().checkAddConditions(obj);
             getInsert().beforeInsert(obj);
             getInsert().validate(obj);
-//            getRepository().save(obj);
+            getRepository().save(obj);
         } catch (OperationException ex) {
             return new ResponseEntity<String>(ResponseJson.failure(ex.getMessage()), HttpStatus.BAD_REQUEST);
         }

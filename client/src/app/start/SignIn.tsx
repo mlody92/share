@@ -19,8 +19,13 @@ export class SignIn extends React.Component <SignUpProps, SignUpState> {
         const fields: Fields = {
             email: {
                 id: "email",
-                validation: [{rule: isEmail}, {rule: required}, {rule: maxLength, args: 40}],
+                // validation: [{rule: isEmail}, {rule: required}, {rule: maxLength, args: 40}],
                 placeholder: "Email"
+            },
+            username: {
+                id: "username",
+                validation: [{rule: isEmail}, {rule: required}, {rule: maxLength, args: 40}],
+                placeholder: "Username"
             },
             password: {
                 id: "password",
@@ -32,7 +37,7 @@ export class SignIn extends React.Component <SignUpProps, SignUpState> {
         return (
             <div id="logreg-forms">
                 <Form
-                    action="http://localhost:8080/user/signin"
+                    action="http://localhost:8080/login"
                     formFields={fields}
                     className={"form-signin"}
                     fieldsHtml={() => (
@@ -45,7 +50,7 @@ export class SignIn extends React.Component <SignUpProps, SignUpState> {
                                         value={" Sign in with Google+"}/>
                             </div>
                             <hr/>
-                            <Field {...fields.email} />
+                            <Field {...fields.username} />
                             <Field {...fields.password} />
                         </React.Fragment>
                     )}

@@ -3,7 +3,6 @@ package com.arokis.share.user.model;
 import com.arokis.general.vaildator.ValidEmail;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import net.bytebuddy.implementation.bind.annotation.Default;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,11 +24,11 @@ public class User implements Serializable {
     private String email;
 
     @NotNull
-    @Size(max = 32)
+    @Size(max = 60)
     private String password;
 
     @Transient
-    private String passwordConfirm;
+    private String repeatPassword;
 
     @NotNull
     @Size(max = 20)
@@ -74,12 +73,12 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
+    public String getRepeatPassword() {
+        return repeatPassword;
     }
 
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
     }
 
     public String getName() {
@@ -120,5 +119,27 @@ public class User implements Serializable {
 
     public void setConfirm(Boolean confirm) {
         this.confirm = confirm;
+    }
+
+    private String[] roles;
+
+    public String[] getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String[] roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object otherUser) {
+        if(otherUser == null) return false;
+        else if (!(otherUser instanceof User)) return false;
+        else return (otherUser.hashCode() == hashCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return getEmail().hashCode() ;
     }
 }
