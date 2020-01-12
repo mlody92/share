@@ -6,7 +6,7 @@ export class Communication {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            mode: "no-cors",
+            // mode: "same-origin",
             body: JSON.stringify(values)
         });
         return responseServer.json();

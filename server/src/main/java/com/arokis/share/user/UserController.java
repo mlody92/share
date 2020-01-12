@@ -94,6 +94,8 @@ public class UserController {
 //    }
 
 
+
+
     @RequestMapping(value = "/logmeout", method = RequestMethod.POST)
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
