@@ -3,7 +3,7 @@ import {Validation} from "../../validate/Validation";
 
 type Editor = "textbox" | "multilinetextbox" | "dropdown";
 
-export interface FieldProps {
+export type FieldProps = {
     /* The unique field name */
     id: string;
 

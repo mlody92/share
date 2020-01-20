@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface ButtonProps {
+export type ButtonProps = {
     id?: string
     type?: 'submit' | 'reset' | 'button'
     className?: string

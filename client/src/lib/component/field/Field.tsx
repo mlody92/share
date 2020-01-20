@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Errors} from "lib/types";
 import {Textbox} from "../textbox/Textbox";
-import {Dropdown} from "../dropdown/Dropdown";
-import {FieldProps} from "./types/FieldProps";
-import {Context} from "../form/types/context";
-import {FormCtx} from "../form/Form";
+import {Dropdown} from "../dropdown";
+import {FieldProps} from "./types/field";
+import {Context} from "../form/types";
+import {FormCtx} from "../form";
 import {MultiTextbox} from "../textbox/MultiTextbox";
 
 export const Field = (props: FieldProps) => {

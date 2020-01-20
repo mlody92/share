@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Response} from 'lib/types';
-import {Fields} from "../../field/types/Fields";
+import {Fields} from "../../field/types/fields";
 import {Values} from "./values";
 
 export type FormProps = {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Context} from "../form/types/context";
+import {Context} from "../form/types";
 import {ComponentProps} from "../componentProps";
 
 export function MultiTextbox(props: ComponentProps) {

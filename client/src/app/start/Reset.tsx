@@ -2,7 +2,7 @@ import * as React from "react";
 import './start.css';
 import {Form} from "lib/component/form/Form";
 import {Field} from "lib/component/field/Field";
-import {Fields} from "lib/component/field/types/Fields";
+import {Fields} from "lib/component/field/types/fields";
 import {isEmail, maxLength, required} from "lib/component/validate/Validator";
 
 interface ResetProps {
