@@ -47,20 +47,8 @@ public class JwtAuthenticationRestController {
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new JwtTokenResponse(token));
-    }
-
-    @RequestMapping(value = "autkentication", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken2(@RequestBody JwtTokenRequest authenticationRequest)
-            throws AuthenticationException {
-        System.out.println("od nowa");
-        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-
-        final UserDetails userDetails = jwtInMemoryUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-
-        final String token = jwtTokenUtil.generateToken(userDetails);
-//        return new ResponseEntity<String>(ResponseJson.success("Operacja logowania przebiegła pomyślnie."), HttpStatus.OK);
-        return ResponseEntity.ok(new JwtTokenResponse(token));
+        // return ResponseEntity.ok(ResponseJson.success("Operacja logowania przebiegła pomyślnie."));
+        return ResponseEntity.ok(ResponseJson.success("Operacja logowania przebiegła pomyślnie.", token));
     }
 
     @RequestMapping(value = "${jwt.refresh.token.uri}", method = RequestMethod.GET)

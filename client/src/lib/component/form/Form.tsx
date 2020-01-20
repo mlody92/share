@@ -33,7 +33,6 @@ export class Form extends React.Component<FormProps, FormState> {
      */
     private validate = (fieldName: string): Errors | null => {
         let newError: Errors | null = null;
-
         if (this.props.formFields[fieldName] && this.props.formFields[fieldName].validation) {
             this.props.formFields[fieldName].validation!.some((value => {
                 const message = value.rule(this.state.values, fieldName, value.args);
@@ -46,7 +45,7 @@ export class Form extends React.Component<FormProps, FormState> {
 
         let errors = this.state.response.errors!;
         const errExist = (errors && errors.find(obj => obj.field === fieldName));
-        removeFirst(errors, errExist);
+        removeFirst(errors, errExist); // todo po co to?
 
         if (newError) {
             errors = [...errors, newError];

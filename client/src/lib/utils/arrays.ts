@@ -6,7 +6,7 @@ export const removeFirst = <T>(array: Array<T>, value: T) => {
     if (idx !== -1) {
         array.splice(idx, 1);
     }
-}
+};
 
 
 

@@ -11,8 +11,7 @@ export interface ButtonProps {
 }
 
 export const Button = (props: ButtonProps) => {
-    const { type = 'button', disabled = false, className = 'btn btn-primary btn-block', iconCls, id, onClick, value } = props
-
+    const { type = 'button', disabled = false, className = 'btn btn-primary btn-block', iconCls, id, onClick, value } = props;
     return (
         <button id={id} type={type} className={className} onClick={onClick} disabled={disabled}>
             {iconCls ? (
