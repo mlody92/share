@@ -15,10 +15,10 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
     private UserDao userDao;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User logged = userDao.get(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User logged = userDao.get(email);
         if (logged == null) {
-            throw new UsernameNotFoundException(String.format("USER_NOT_FOUND '%s'.", username));
+            throw new UsernameNotFoundException(String.format("USER_NOT_FOUND '%s'.", email));
         }
         return new JwtUserDetails(logged.getId(), logged.getEmail(), logged.getPassword(), "ROLE_USER_2");
     }

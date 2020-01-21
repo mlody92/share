@@ -2,28 +2,28 @@ package com.arokis.share.security;
 
 import java.io.Serializable;
 
-public class  JwtTokenRequest implements Serializable {
+public class JwtTokenRequest implements Serializable {
 
     private static final long serialVersionUID = -5616176897013108345L;
 
-    private String username;
+    private String email;
     private String password;
 
     public JwtTokenRequest() {
         super();
     }
 
-    public JwtTokenRequest(String username, String password) {
-        this.setUsername(username);
+    public JwtTokenRequest(String email, String password) {
+        this.setEmail(email);
         this.setPassword(password);
     }
 
-    public String getUsername() {
-        return this.username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
